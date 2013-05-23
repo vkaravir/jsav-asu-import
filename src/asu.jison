@@ -436,18 +436,33 @@ Command
 
 ObjectPrimitives
   : ArcTypes
+  {
+    console.error("arc commands not yet supported");
+  }
   | Array
   | ArrayMarker
   | CodeTypes
   | ListElement
+  {
+    console.error("ListElements not yet supported");
+  }
   | Point
   | PolygonTypes
   | Polyline
   | Text
   | I18nText
+  {
+    console.error("I18nText not yet supported");
+  }
   | GraphDef
   | GridDefinition
+  {
+    console.error("Grids not yet supported");
+  }
   | VariableDeclaration
+  {
+    console.error("Variables not yet supported");
+  }
   ;
 
 Operations
@@ -456,8 +471,14 @@ Operations
   | ColorChangeTypes
   | Delay
   | Echo
+  {
+    console.error("Echo commands not yet supported");
+  }
   | Label
   | Link
+  {
+    console.error("Link commands not yet supported");
+  }
   | Location
   | Merge
   | Move
@@ -467,12 +488,24 @@ Operations
   | SetText
   | SetFont
   | JHAVEInteractionSupport
+  {
+    console.error("JHAVEInteractionSupport commands not yet supported");
+  }
   | EmbedFile
   | MethodSupport
   | PropertyChange
+  {
+    console.error("propertyChange commands not yet supported");
+  }
   | GraphOps
   | GridOps
+  {
+    console.error("Grid operations not yet supported");
+  }
   | VariableOps
+  {
+    console.error("Variable operations not yet supported");
+  }
   ;
 
 ArcTypes
