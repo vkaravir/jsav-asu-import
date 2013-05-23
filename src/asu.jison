@@ -1,6 +1,5 @@
 %{
   // for testing purposes, make these globallly visible
-  jsav = new JSAV("asucontainer");
   var asustyle = $("<style id='asuStyle'/>").appendTo($("body"));
   var asuobjs = {};
   asugroups = {};
