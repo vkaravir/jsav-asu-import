@@ -1,13 +1,15 @@
 (function($) {
-  var initAsu = function(asuSrc) {
-  };
+  // add importAsu as an extension to instances of JSAV
+  // parameter asuSrc can be a selector (for jQuery) or
+  // a url to a file where the AnimalScript source will
+  // be loaded
   JSAV.ext.importAsu = function(asuSrc) {
     var asuSrcElem = $(asuSrc),
         that = this;
-    if (asuSrcElem.size() > 0) {
+    if (asuSrcElem.size() > 0) { // if we found an element with the asuSrc
       AsuImport(asuSrcElem.html(), this);
       this.recorded();
-    } else {
+    } else { // if no element was found, try to load from the url
       $.get(asuSrc, function(data, status, response) {
         var inputLines = response.responseText.split("\n"),
             allLines = [];
@@ -21,4 +23,5 @@
     }
   };
 
+// begin wrapper for the generated Asu parser, will be closed in jsav-asu-import-footer.js
 var AsuImport = function(src, jsav) {
