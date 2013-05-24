@@ -1570,7 +1570,33 @@ Offset
       prevLoc = $$;
     }
   | offset '(' Int ',' Int ')' from String
+    {
+      var obj = asuobjs[$8]; // should be a "point"
+
+      // offset of the objects we're positioning relative to
+      var offset = obj.element.offset(), // offset of that object
+          canvasOffset = jsav.canvas.offset(); // offset of JSAV canvas
+
+      $$ = { left: parseInt($3, 10) + (offset.left - canvasOffset.left),
+             top: parseInt($5, 10) + (offset.top - canvasOffset.top)};
+      prevLoc = $$;
+    }
   | offset '(' Int ',' Int ')' from String baseline StartOrEnd
+    {
+      var obj = asuobjs[$8];
+
+      // bounds of the objects we're positioning relative to
+      var bounds = obj.bounds(),
+          offset = obj.element.offset(), // offset of that object
+          canvasOffset = jsav.canvas.offset(); // offset of JSAV canvas
+
+      // apply the alignment option, which will return {left:..., top:...}
+      $$ = AsuHelpers.applyDirection($10,
+                            { left: parseInt($3, 10),
+                              top: parseInt($5, 10)},
+                            bounds);
+      prevLoc = $$;
+    }
   ;
 Direction
   : DIRECTION
@@ -1578,8 +1604,11 @@ Direction
   ;
 StartOrEnd
   : start
+    { $$ = "NW"; }
   | end
+    { $$ = "NE"; }
   | /* empty */
+    { $$ = "NW"; }
   ;
 
 ArrowOptions
