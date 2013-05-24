@@ -1,0 +1,615 @@
+<animalScriptFile>:
+  <fileHeader> { <command> \n}
+
+<fileHeader>:
+  %Animal <double> [<nat>*<nat>] [\n <titleInfo>]
+  [\n <authorInfo>]
+
+<titleInfo>:
+  title "title as a string"
+
+<authorInfo>:
+  author "author name including EMail address"
+
+<command>:
+  <objectPrimitives> | <operations>
+  | '{' | '}' | <languageSupport> | <extensionCommand>
+
+<objectPrimitives>:
+  <arcTypes> | <array> | <arrayMarker> | <codeTypes> | <listelement> 
+  | <point> | <polygonTypes> | <polyline> | <text>
+  | <i18nText> | <graphDef> | <gridDefinition> | <variableDeclaration> 
+
+<operations>:
+  <arrayOp> | <clone> | <colorChangeTypes> | <delay>
+  | <echo> | <label> | <link> | <location>
+  | <merge> | <move> | <rotate> | <showTypes> | <swap>
+  | <JHAVEInteractionSupport> | <embedFile> | <methodSupport>
+  | <propertyChange> | <graphOps> | <gridOps> | <variableOps>
+
+<arcTypes>:
+  <arc> | <circleSeg> | <ellipse> | <circle>
+
+<arc>:
+  <arcName> "ID" <nodeDefinition> radius <nodeDefinition> <arcOptions>
+   
+<arcName>:
+  arc | ellipseseg | ellipsesegment
+
+<circleSeg>:
+  <circleSegName> "ID" <nodeDefinition> radius <int> <arcOptions>
+
+<circleSegName>:
+  circleseg | circlesegment
+
+<arcOptions>:
+ [angle <int>] [starts <int>] [clockwise | counterclockwise] [<colorDef>] [<depthDef>] 
+   [<closedName> [<fillOptions>] | <arrowOptions>] [<displayOptions>]
+
+<ellipse>:
+  ellipse "ID" <nodeDefinition> radius <nodeDefinition> <closedOptions>
+
+<circle>:
+  circle "ID" <nodeDefinition> radius <int> <closedOptions>
+
+<array>:
+  <arrayKey> "arrayID" [at] <nodeDefinition>
+    [<colorDef>] [fillColor <color>]
+    [elementColor <color>] [elemHighlight <color>]
+    [cellHighlight <color>] [horizontal | vertical]
+    length <nat+> { <intText> } [<depthDef>]
+    [<timeOffset>] [cascaded [within <nat+> ticks | ms ]] 
+    [hidden] <font>
+
+<arrayKey>:
+  array | field
+
+<arrayMarker>:
+  <markKey> "indexID" on "arrayID" atIndex <nat>
+    [label <intText>] [short | long | normal] [<colorDef>] 
+    [<depthDef>] <font> [<displayOptions>]
+
+<markKey>:
+  arrayMarker | arrayPointer | arrayIndex
+
+<codeTypes>:
+  <codeGroup> | <codeLine> | <codeElem>
+
+<codeGroup>:
+  codegroup "groupID" [at] <nodeDefinition>
+    [<colorDef>] [highlightColor <color>]
+    [contextColor <color>] <font>
+    [<depthDef>] [<timeOffset>]
+
+<codeLine>:
+  addCodeLine "code" [name "ID"] to "codeGroupID" 
+    [indentation <nat>] [<timeOffset>]
+
+<codeElem>:
+  addCodeElem "code" [name "ID"] to "codeGroupID"
+    [row <nat> | column <nat>] [inline] [indentation <nat>] [<timeOffset>]
+
+<listelement>:
+  listelement "ID" <nodeDefinition> [text <intText>] 
+    pointers <nat> [position <pointerPos>]
+    [ { <ptrLocation> } ] [prev "prevID"] [next "nextID"]
+    [<colorDef>] [boxFillColor <color>]
+    [pointerAreaColor <color>]
+    [pointerAreaFillColor <color>]
+    [textColor <color>] [<depthDef>] 
+    [<displayOptions>]
+
+<pointerPos>:
+  top | left | right | bottom | none
+
+<ptrLocation>:
+  ptr<nat> <nodeDefinition> | ptr<nat> to "targetID"
+
+<point>:
+  point "pointID" <nodeDefinition> [<colorDef>]
+     [<depthDef>] [<displayOptions>]
+
+<polygonTypes>:
+  <square> | <rect> | <triangle> | <polygon>
+
+<square>:
+  square "ID" <nodeDefinition> <nat+> <closedOptions>
+
+<rect>:
+  <absoluteRectangle> | <relativeRectangle>
+
+<absoluteRectangle>:
+  <rectName> "ID" <nodeDefinition> <nodeDefinition> <closedOptions>
+
+<rectName>:
+  rectangle | rect
+  
+<relativeRectangle>:
+  <relRectName> "ID" <nodeDefinition> <nodeDefinition> <closedOptions>
+
+<relRectName>:
+  relrect | relrectangle
+
+<triangle>:
+  triangle "ID" <nodeDefinition> <nodeDefinition> <nodeDefinition> <closedOptions>
+  
+<polygon>:
+  polygon "ID" <nodeDefinition> <nodeDefinition> { <nodeDefinition> } <closedOptions>
+
+<polyline>:
+  <lineTag> "lineID" <nodeDefinition> { <nodeDefinition> } <openOptions>
+
+<lineTag>:
+  polyline | line
+
+<text>:
+  text "ID" <intText> [at] <nodeDefinition>
+    [centered | right] [<colorDef>] [<depthDef>]
+    <font> [boxed] [<displayOptions>]
+    
+<closedOptions>:
+  [<colorDef>] [<depthDef>] [<fillOptions>] [<displayOptions>]
+
+<openOptions>:
+  [<colorDef>] [<depthDef>] [arrowOptions>] [<displayOptions>]
+  
+<colorDef>:
+  color <color>
+
+<depthDef>:
+  depth <nat>
+
+<arrayOp>:
+  <arrayPut> | <arraySwap> | <moveArrayMarker>
+  | <highlightArrayCell> | <highlightArrayElem>
+
+<arrayPut>:
+  arrayPut "value" on "arrayID" position <nat>
+    [<timing>]
+
+<arraySwap>:
+  arraySwap on "arrayName" position <nat> with <nat>
+    [<timing>]
+
+<moveArrayMarker>:
+  <moveMarkerKeyword> "markerID" to 
+    [position <nat> | arrayEnd | outside] [<timing>]
+
+<moveMarkerKeyword>:
+  moveArrayIndex | moveArrayMarker | moveArrayPointer
+  | moveIndex | moveMarker | movePointer
+  | jumpArrayIndex | jumpArrayMarker | jumpArrayPointer
+  | jumpIndex | jumpMarker | jumpPointer
+
+<highlightArrayCell>:
+  <hlACellKeyword> on "arrayID" <aHighlightRange>
+  <timing>
+
+<hlACellKeyword>:
+  highlightArrayCell | unhighlightArrayCell
+
+<aHighlightRange>:
+  position <nat> | [from <nat>] [to <nat>]
+
+<hilightArrayElem>:
+  <hlAElemKeyword> on "arrayID" <aHighlightRange>
+  <timing>
+
+<hlAElemKeyword>:
+  highlightArrayElem | unhighlightArrayElem
+
+<clone>: 
+  clone "originalID" as "cloneID" [at] <nodeDefinition>
+    [<displayOptions>]
+
+<colorChangeTypes>:
+  <colorChange> | <codeColorChange>
+
+<colorChange>:
+  <colorKW> <oids> [type <colorType>] <color> [<timing>]
+
+<colorKW>:
+  color | fillColor
+
+<codeColorChange>: 
+  <codeColorType> on "baseCodeGroup" line <nat>
+      [row <nat> | column <nat>] [context | region] [<timing>]
+
+<codeColorType>:
+  highlightCode | unhighlightCode
+
+<delay>:
+  delay <nat> [ms]
+  | delay clock on "ID"
+
+<echo>:
+  <echoKW> location: <nodeDefinition>
+  | <echoKW> <boundsKeyword>: { <oids> }
+  | <echoKW> text: "text"
+  | <echoKW> value: { "ID" }
+  | <echoKW> ids: { <oids> }
+  | <echoKW> visible
+  | <echoKW> rule: "keyword"
+  | <echoKW> unquotedText
+
+<echoKW>:
+  echo | print | write
+<boundsKeyword>:
+  boundingBox | bounds
+
+<label>:
+  label "labelEntry"
+
+<link>:
+  setLink "elemID" [link <nat>] to "targetID" [<timing>]
+  | setLink "elemID" [link <nat>] <nodeDefinition> [<timing>]
+  | clearLink "elemID" [link <nat>] [<timing>]
+
+<location>:
+  <locationKeyword> "locationID" [at] <nodeDefinition>
+  | moveLocation "locationID" to <nodeDefinition>
+
+<locationKeyword>:
+  location | defineLocation | defLocation
+
+<merge>:
+  <mergeKeyWord> "targetID" { "ID" }
+
+<mergeKeyWord>:
+  group | merge | set | ungroup | remove
+
+<move>:
+  <moveVia> | <moveAlong> | <moveTo>
+
+<moveKeyword>:
+  move | translate | jump
+
+<moveVia>:
+  <moveKeyword> <oids> [<corner>] [<methodSpec>] 
+   via "oid" [<timing>] 
+
+<moveAlong>:
+  <moveAlongPolyline> | <moveAlongArc>
+
+<moveAlongPolyline>:
+  <moveKeyword> <oids> [<corner>] [<methodSpec>]
+     along <lineTag> <nodeDefinition> { <nodeDefinition> }
+     [<timing>] 
+
+<moveAlongArc>:
+  <moveAlongArcType> | <moveAlongCircleType>
+
+<moveAlongArcType>:
+  <moveKeyword> <oids> [<corner>] [<methodSpec>]
+    along <arcType> <nodeDefinition> <int> <int>
+     <int> <int> [<timing>] 
+
+<moveAlongCircleType>:
+  <moveKeyword> <oids> [<corner>] [<methodSpec>]
+    along <circleType> <nodeDefinition> <int> <int>
+    <int> [<timing>] 
+
+<moveTo>:
+  <moveKeyword> <oids> [<corner>] [<methodSpec>]
+   to <nodeDefinition> [<timing>] 
+
+<methodSpec>:
+  type "typeName"
+
+<corner>:
+  corner <direction>
+
+<arcType>:
+  <arcName> | ellipse
+
+<circleType>:
+  circle | <circleSegName>
+
+<rotate>:
+  rotate <oids> around "id" [degrees <int>] [<timing>]
+ | rotate <oids> center <nodeDefinition> [degrees <int>]
+   [<timing>]
+
+<showTypes>:
+  <simpleShow> | <codeHide> | <selectiveHide>
+
+<simpleShow>:
+  <showMode> <oids> [<methodSpec>] [<timing>]
+
+<codeHide>:
+  hideCode "codeID" [<timeOffset>]
+
+<selectiveHide>:
+  hideAll [<methodSpec>] [<timing>]
+  | hideAllBut { <oids> } [<methodSpec>] [<timing>]
+
+<showMode>:
+  show | hide
+
+<swap>:
+  <swapKeyword> "oid1" "oid2" 
+
+<swapKeyword>:
+  swap | exchange
+
+<languageSupport>:
+  supports { "languageKey" }
+  [\n <resourceKey> "fileNameWithoutExtension"]
+
+<resourceKey>:
+  resource | bundle | resourceBundle
+
+<intText>:
+  "text" | key: "textResourceKey" | ( { key: "text" } )
+
+<color>:
+  black | blue | blue2 | blue3 | blue4 | brown2
+  | brown3 | brown4 | cyan | cyan2 | cyan3 | cyan4 
+  | dark Gray | gold | green | green2 | green3 
+  | green4 | light Gray| light_blue | magenta 
+  | magenta2 | magenta3 | magenta4 | orange | pink
+  | pink2 | pink3 | pink4 | red | red2 | red3
+  | red4 | white | yellow | (<nat>, <nat>, <nat>)
+
+<displayOptions>:
+  hidden | <timeOffset>
+
+<timeOffset>:
+  after <nat> [ticks | ms]
+
+<timing>:
+  [<timeOffset>] [within <nat> [ticks | ms]]
+
+<fontName>:
+  Serif | SansSerif | Monospaced
+
+<nodeDefinition>:
+  (<int>, <int>) | <offset> | move (<int>, <int>)
+
+<offset>:
+  offset (<int>, <int>) from "referenceID" node <nat+>
+| offset (<int>, <int>) from "referenceID" <direction>
+| offset (<int>, <int>) from "locationID"
+| offset (<int>, <int>) from "referenceID" 
+    baseline [start | end]
+
+<direction>:
+  NW | N | NE | W | C | E | SW | S | SE
+  | Northwest | North | Northeast | West
+  | Middle | Center | East | Southwest
+  | South | Southeast
+
+<arrowOptions>:
+  [fwArrow] [bwArrow]
+
+<closedName>:
+  closed
+
+<fillOptions>:
+ filled [fillColor <color>]
+
+<font>:
+  [font <fontNames>] [size fontSize] [bold] [italic]
+
+<oids>:
+  { "targetOID" }
+
+<nat>:
+  0 | 1 | ... | 
+
+<int>:
+  <nat> | -<nat> | ( <double> <operator> <double>)
+  | "objectID" <objectPosition>
+
+<operator>:
+  + | - | * | :
+
+<objectPosition>:
+  x | y | width | height
+
+<graphDef>:				# Location: animalscript.extensions.GraphSupport
+  graph "graphID" size <nat+> [<colorDef>] [bgColor <color>] [outlineColor <color>]
+    [highlightColor <color>] [elemHighlightColor <color>] [nodeFontColor <color>]
+    [edgeFontColor <color>] [directed] [weighted] nodes "{" [<font>]
+    "nodeValue" [at] <nodeDefinition> { "," "nodeValue" [at] <nodeDefinition> }
+    "}" edges "{" [edgeFont <fontNames> [size fontSize] [bold] [italic]]
+    { "(" <nat> "," <nat> ["," "weight"] ")" [","] } "}" [origin <nodeDefinition>]
+    [showIndices] [<depthDef>] [<displayOptions>]
+   
+<graphOps>:				# Location: animalscript.extensions.GraphSupport
+ <hlEdge> | <hlNode> | <changeWeight>
+  
+<hlEdge>:
+  <graphEdgeHLKeyword> on "graphName" [type "methodName"]
+    { "(" <nat> "," <nat> ")" } [<timing>]
+  
+<hlNode>:
+  <graphNodeHLKeyword> on "graphName" [type "methodName"]
+    nodes { <nat> } [<timing>]
+
+<changeWeight>:
+  setEdgeWeight of "graphName" [edge] "(" <nat> "," <nat> ")" to "newValue"
+  
+<graphEdgeHLKeyword>:
+  highlightEdge | transformEdge | unhighlightEdge
+
+<graphNodeHLKeyword>:
+  highlightNode | transformNode | unhighlightNode
+  
+<gridDefinition>:		# Location: animalscript.extensions.GridSupport
+  grid "gridID" <nodeDefinition> [lines <nat+>] [columns <nat+>]
+    [style <gridStyle>)] [cellWidth <nat+>] [maxCellWidth <nat>]
+    [cellHeight <nat+>] [maxCellHeight <nat>] [fixedCellSize]
+    [<colorDef>] [textColor <color>] [fillColor <color>] [borderColor <color>]
+    [highlightTextColor <color>] [highlightFillColor <color>]
+    [highlightBorderColor <color>] [<font>] [align <gridAlignStyle>]
+    [<depthDef>] [<timing>]
+
+<gridStyle>:
+  plain | matrix | table | junctions
+
+<gridAlignStyle>:
+  left | right | center
+  
+<gridOps>:				# Location: animalscript.extensions.GridSupport
+  <setGridValue>| <setGridColor>  | <setGridFont> | <swapGridValues>
+  | <highlightGridCell> | <highlightGridElem> | <alignGridValue>
+  
+<setGridValue>:
+  setGridValue <gridCellSpec> "newValue" [refresh] [<timing>]
+  
+<gridCellSpec>:			# note: NO space between entries here!
+						# examples: "myGrid[0][7]", including double quotes
+						# "myGrid", "myGrid[6]" are also OK
+  '"' "gridName" [ "[" <nat> "]" [ "[" <nat> "]" ] ] '"'
+  
+<setGridColor>:
+  setGridColor <gridCellSpec> [<colorDef>] [textColor <color>]
+    [fillColor <color>] [borderColor <color>] [highlightTextColor <color>]
+    [highlightFillColor <color>] [highlightBorderColor <color>] [<timing>]
+
+<setGridFont>:
+  setGridFont <gridCellSpec> <font> [<timing>]
+  
+<swapGridValues>: 
+  swapGridValues <gridCellSpec> and <gridCellSpec> [refresh] [<timing>]
+	
+<highlightGridCell>:
+  highlightGridCell <gridCellSpec> [<timing>]
+  | unhighlightGridCell <gridCellSpec> [<timing>]
+  
+<highlightGridElem>:
+  highlightGridElem <gridCellSpec> [<timing>]
+  | unhighlightGridElem <gridCellSpec> [<timing>]
+  
+<alignGridValue>:
+  alignGridValue <gridCellSpec> [left | right | center] [<timing>]
+  
+<variableOps>:   		# Location: animalscript.extensions.VariableSupport
+ <variableSet> | <variableDiscard>
+
+<variableDeclaration>:
+  declare "variableName" [initValue "value"] [role "role"]
+  
+<variableSet>:
+  update "variableName" <vsKW> "value" [role "role"]
+  
+<vsKW>:
+  initValue | to
+  
+<variableDiscard>:
+  discard "variableName"
+  
+<propertyChange>:  		# Location: animalscript.extensions.PropertyChangeSupport
+  <pCKeyword> "ID" <pcOperation>
+
+<pCKeyword>:
+  change | changeParam | changeProperty
+  
+<pcOperation>:
+  addNode <nodeDefinition>    	# polyline only
+  | removeNode <nat+>			# polyline only
+  | bwArrow						# polyline only
+  | fwArrow						# polyline only
+  
+<methodSupport>:		# Location: animalscript.extensions.MethodInvocationSupport
+  createObject "name" class "className" [onLoad]
+  | invokeGeneration on "objectName" [param <int>] [onLoad]
+  | invokeMethod "method" on "objectName" [onLoad]
+
+<i18nText>:				# Location: animalscript.extensions.InternationalTextSupport
+  iText "ID" "key" [at] <nodeDefinition> [centered] [<colorDef>]
+    [<depthDef>] <font> [<displayOptions>]
+    
+<embedFile>:
+  embed "filename"
+  
+<JHAVEInteractionSupport>: # Loc.: animalscript.extensions.JhaveActionSupport
+  <docu> | <fibq> | <mcq> | <tfq> | <startq> | <idef> | <ielem>
+  
+<docu>:
+  Documentation "URL"
+  
+<fibq>:					# Fill in the blanks; user enters a single answer
+  FIBQuestion "ID"
+  |  FIBQuestion "ID" \n <interactParams> { "answerText" \n } endAnswer
+    
+<mcq>:					# multiple choice question
+  MCQuestion "ID" 
+  |  MCQuestion "ID" \n <interactParams> { "answerText" \n endChoice \n
+     [comment "comment" \n endComment \n] \n <nat+> \n endAnswer
+  
+<tfq>:					# true/false question
+  TFQuestion "ID"
+  |  TFQuestion "ID" \n <interactParams> <trueFalse> \n endAnswer
+  
+<trueFalse>:
+  t | f
+  
+<interactParams>:
+  [<qGroup>] [<minIteration>] [<ptsPossible>] { "questionText" \n } endText \n
+    answer \n 
+
+<qGroup>:
+  QuestionGroup "ID" \n
+  
+<minIteration>:
+  nrRepeats <nat+> \n
+  
+<ptsPossible>:
+  points <nat+> \n
+  
+<startq>:
+  StartQuestions
+  
+<idef>:
+  interactionDefinition "interactionID"
+  
+<ielem>:
+  interaction "interactionID"
+  
+<VHDLelemDef>:			# Location: animalscript.extensions.VHDLObjectParser
+  <gateDefinition> | <ffDefinition> | <muxDefinition> | <wireDefinition> | <entityDef>
+
+<gateDefinition>:
+  <gateType> "gateName" <nodeDefinition> <nodeDefinition>
+  { [input "name" [value "value"]] | [output "name" [value "value"]] }
+  <closedOptions>
+  
+<gateType>:
+  and | relAnd | or | relOr | nand | relNand | nor | relNor | xor | relXOr
+  | xnor | relXNor | not | relNot
+
+<ffDefinition>:
+  <ffType> "ffName" <nodeDefinition> <nodeDefinition>
+  { [ input "name" [value "value"]] | [output "name" [value "value"]] 
+      | [<ffElem> "name" [value "value"]] | [control "name" [value "value"]] }
+  <closedOptions>
+
+<ffType>:
+  jk | relJK | rs | relRS | d | relD | t | relT
+  
+<ffElem>:
+  clk | ce | rd | sd 
+  
+<entityDef>:
+  <entityType> "entityName" <nodeDefinition> <nodeDefinition>
+  { [ input "name" [value "value"]] | [output "name" [value "value"]] 
+      | [inoutput "name" [value "value"]] | [control "name" [value "value"]] }
+  <closedOptions>
+  
+<entityType>:
+  entity | relEntity
+
+<muxDefinition>:
+  <muxType> "muxName" <nodeDefinition> <nodeDefinition> 
+  { [ input "name" [value "value"]] | [output "name" [value "value"]] 
+    | [control "name" [value "value"]] } <closedOptions>
+
+<muxType>:
+  mux | relMUX | demux | relDEMUX
+
+<wireDefinition>:
+  wire "wireName" { <nodeDefinition> } <openOptions>
+  
+<extensionCommand>:
