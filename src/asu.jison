@@ -1128,13 +1128,36 @@ ColorChangeTypes
   ;
 ColorChange
   : ColorKeyword Oids ColorTypeDef Color Timing
+    {
+    var objIds = $2,
+        type = $3 || $1,
+        obj, prop, newProp;
+    for (var i = objIds.length; i--; ) {
+      obj = asuobjs[objIds[i]];
+      newProp = {};
+      if (JSAV.utils.isGraphicalPrimitive(obj)) {
+        if (type === "color") { prop = "stroke"; }
+        else if (type === "fillColor") { prop = "fill"; }
+        else { console.error("ColorChange of type", type, "not yet implemented"); }
+      } else {
+        if (type === "color") { prop = type; }
+        else if (type === "fillColor") { prop = "background-color"; }
+        else { console.error("ColorChange of type", type, "not yet implemented"); }
+      }
+      newProp[prop] = $4;
+      obj.css(newProp, $5);
+    }
+    }
   ;
 ColorKeyword
   : COLORCOMMAND
+    { $$ = "color"; }
   | FILLCOLORCOMMAND
+    { $$ = "fillColor"; }
   ;
 ColorTypeDef
   : type String
+    { $$ = $2; }
   | /* empty */
   ;
 CodeColorChange
