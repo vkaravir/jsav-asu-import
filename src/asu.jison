@@ -2090,8 +2090,12 @@ RoleDef
   | /* empty */
   ;
 VariableSet
-  : update String to String RoleDef
-  | update UnquotedString to String RoleDef
+  : update String ToOrInitValue String RoleDef
+  | update UnquotedString ToOrInitValue String RoleDef
+  ;
+ToOrInitValue
+  : to
+  | initValue
   ;
 VariableDiscard
   : discard String
