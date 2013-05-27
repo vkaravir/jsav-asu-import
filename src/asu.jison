@@ -237,15 +237,15 @@
 "highlightBorderColor"  return 'highlightBorderColor'
 "align"               return 'align'
 "highlightBackColor"  return 'highlightBackColor'
-"setGridValue"        return 'setGridValue'
+"setGridValue"        { this.begin("COMMAND"); return 'setGridValue';}
 "setGridColor"        { this.begin("COMMAND"); return 'setGridColor';}
-"setGridFont"         return 'setGridFont'
-"swapGridValues"      return 'swapGridValues'
-"unhighlightGridCell" return 'unhighlightGridCell'
-"highlightGridCell"   return 'highlightGridCell'
-"unhighlightGridElem" return 'unhighlightGridElem'
-"highlightGridElem"   return 'highlightGridElem'
-"alignGridValue"      return 'alignGridValue'
+"setGridFont"         { this.begin("COMMAND"); return 'setGridFont';}
+"swapGridValues"      { this.begin("COMMAND"); return 'swapGridValues';}
+"unhighlightGridCell" { this.begin("COMMAND"); return 'unhighlightGridCell';}
+"highlightGridCell"   { this.begin("COMMAND"); return 'highlightGridCell';}
+"unhighlightGridElem" { this.begin("COMMAND"); return 'unhighlightGridElem';}
+"highlightGridElem"   { this.begin("COMMAND"); return 'highlightGridElem';}
+"alignGridValue"      { this.begin("COMMAND"); return 'alignGridValue';}
 "refresh"             return 'refresh'
 
 "declare"             {this.begin("VARIABLE"); return 'declare';}
@@ -282,6 +282,7 @@
 "height"              return 'height'
 "via"                 return 'via'
 "of"                  return 'of'
+"and"                 return 'and'
 
 'ptr'[0-9]+           return 'PTRNAT'
 
@@ -400,9 +401,6 @@ ObjectPrimitives
   }
   | GraphDef
   | GridDefinition
-  {
-    console.error("Grids not yet supported");
-  }
   | VariableDeclaration
   {
     console.error("Variables not yet supported");
@@ -443,9 +441,6 @@ Operations
   }
   | GraphOps
   | GridOps
-  {
-    console.error("Grid operations not yet supported");
-  }
   | VariableOps
   {
     console.error("Variable operations not yet supported");
@@ -1974,37 +1969,131 @@ OptionalEdge
 
 GridDefinition
   : grid String NodeDefinition LinesDef ColDef StyleDef CellWidthDef MaxCellWidthDef CellHeightDef MaxCellHeightDef FixedCellSizeDef ColorDef ElemColorDef TextColorDef FillColorDef BorderColorDef HighlightTextColorDef HighlightBackColorDef HighlightFillColorDef HighlightBorderColorDef Font AlignDef DepthDef Timing
+    {
+      var cssProps = [],
+          style = $6;
+
+      // cell sizings
+      if ($7) { cssProps.push("#" + $2 + " .jsavindex { width:" + $7 + "px;}");}
+      if ($8) { cssProps.push("#" + $2 + " .jsavindex { max-width:" + $8 + "px;}");}
+      if ($9) { cssProps.push("#" + $2 + " .jsavindex { height:" + $9 + "px;}");}
+      if ($10) { cssProps.push("#" + $2 + " .jsavindex { max-height:" + $10 + "px;}");}
+      if ($11 && $7) { // fixed sizing and width def, use width as max-width
+        cssProps.push("#" + $2 + " .jsavindex { max-width:" + $7 + "px;}");
+      }
+      if ($11 && $9) { // fixed sizing and height def, use width as max-height
+        cssProps.push("#" + $2 + " .jsavindex { max-height:" + $9 + "px;}");
+      }
+
+      // color def, used if text/border colors are not specified
+      if ($12) {
+        if (!$14) { cssProps.push("#" + $2 + " .jsavvalue {color:" + $12 + ';}'); }
+        if (!$16) {
+          if (style === "asutable") {
+            cssProps.push("#" + $2 + " .jsavindex {border-color:" + $12 + ';}');
+          } else if (style === "asumatrix") {
+            // for matrix style, the borders are specified for the main element
+            cssProps.push("#" + $2 + "{border-color:" + $12 + ';}');
+          }
+        }
+      }
+      // text color
+      if ($14) { cssProps.push("#" + $2 + " .jsavvalue {color:" + $14 + ';}'); }
+      // element fill color
+      if ($15) {
+        if (style === "asutable" || style === "asuplain") {
+          cssProps.push("#" + $2 + " .jsavindex {background-color:" + $15 + ';}');
+        }
+      }
+      // element border color
+      if ($16) {
+        if (style === "asutable") {
+          cssProps.push("#" + $2 + " .jsavindex {border-color:" + $16 + ';}');
+        } else if (style === "asumatrix") {
+          // for matrix style, the borders are specified for the main element
+          cssProps.push("#" + $2 + "{border-color:" + $16 + ';}');
+        }
+      }
+
+      /*
+      // element highlight color
+      if ($8) { cssProps.push("#" + $2 + " .jsavvalue.jsavelemhighlight {color:" + $8 + 
+                              ' !important;}'); }
+      // cell highlight color
+      if ($9) { cssProps.push("#" + $2 + " .jsavvalue.jsavcellhighlight {" +
+                              "background-color:" + $9 + ' !important;}'); }*/
+      // font definition
+      if ($21) {
+        cssProps.push("#" + $2 + " .jsavnode {" + $21 + "}");
+      }
+      // depth
+      if (typeof $23 !== undefined) {
+        cssProps.push(AsuHelpers.depthToCss($23, "#" + $2));
+      }
+
+      // alignment
+      cssProps.push("#" + $2 + " .jsavvalue { text-align: " + $22 + ";}");
+
+      // add the generated CSS to the DOM
+      asustyle.html(asustyle.html() + cssProps.join(""));
+
+      // create initial data for the matrix
+      var arr = [], arrays = [];
+      arr.length = $5;
+      for (i = 0; i < $4; i++) {
+        arrays.push(arr.slice(0));
+      }
+
+      var opts = $.extend($3, $24);
+
+      var m = jsav.ds.matrix(arrays, opts);
+      m.id($2);
+      m.element.addClass(style);
+      m.layout();
+      asuobjs[$2] = m;
+    }
   ;
 LinesDef
   : lines NAT
-  | /* empty */
+    { $$ = parseInt($2, 10); }
   ;
 StyleDef
   : style plain
+    { $$ = "asuplain"; }
   | style matrix
+    { $$ = "asumatrix"; }
   | style table
+    { $$ = "asutable"; }
   | style junctions
+    { $$ = "asujunctions"; }
   | /* empty */
+    { $$ = "asuplain"; }
   ;
 CellWidthDef
   : cellWidth NAT
+    { $$ = parseInt($2, 10); }
   | /* empty */
   ;
 MaxCellWidthDef
   : maxCellWidth NAT
+    { $$ = parseInt($2, 10); }
   | /* empty */
   ;
 CellHeightDef
   : cellHeight NAT
+    { $$ = parseInt($2, 10); }
   | /* empty */
   ;
 MaxCellHeightDef
   : maxCellHeight NAT
+    { $$ = parseInt($2, 10); }
   | /* empty */
   ;
 FixedCellSizeDef
   : fixedCellSize
+    { $$ = true; }
   | /* empty */
+    { $$ = false; }
   ;
 BorderColorDef
   : borderColor Color
@@ -2032,16 +2121,30 @@ HighlightBorderColorDef
   | /* empty */
   ;
 AlignDef
-  : align left
-  | align right
-  | align center
+  : align GridAlignKw
+    { $$ = $2; }
   | /* empty */
+    { $$ = "center"; }
+  ;
+GridAlignKw
+  : left
+    { $$ = "left"; }
+  | right
+    { $$ = "right"; }
+  | center
+    { $$ = "center"; }
   ;
 
 GridOps
   : SetGridValue
   | SetGridColor
+  {
+    console.error("Grid operations not yet supported");
+  }
   | SetGridFont
+  {
+    console.error("Grid operations not yet supported");
+  }
   | SwapGridValues
   | HighlightGridCell
   | HighlightGridElem
@@ -2050,9 +2153,46 @@ GridOps
 
 SetGridValue
   : setGridValue String String RefreshDef Timing
+    {
+      // cell will contain [GridId, row, column]
+      var cell = AsuHelpers.parseGridCellIdentifier($2),
+          grid = asuobjs[cell[0]],
+          row = cell[1],
+          column = cell[2]
+          i, j,
+          newValue = $3,
+          opts = $5;
+      if (row >= grid._arrays.length ||
+          column >= grid._arrays[0].size()) {
+        console.error("Invalid cell (" + row + ",", column +
+                      ") for setGridValue");
+        return;
+      }
+      if (typeof row === "number" && typeof column === "number") {
+        // setting value for a single cell
+        grid.value(row, column, newValue, opts);
+      } else if (typeof row === "number") { // complete row
+        for (i = grid._arrays[0].size(); i--; ) {
+          grid.value(row, i, newValue, opts);
+        }
+      } else if (typeof column === "number") { // complete column
+        for (i = grid._arrays.length; i--; ) {
+          grid.value(i, column, newValue, opts);
+        }
+      } else { // whole grid
+        for (i = grid._arrays.length; i--; ) {
+          for (j = grid._arrays.length; j--; ) {
+            grid.value(i, j, newValue, opts);
+          }
+        }
+      }
+      // if refresh, recalculate the layout
+      if ($4) { grid.layout(); }
+    }
   ;
 RefreshDef
   : refresh
+    { $$ = true; }
   | /* empty */
   ;
 SetGridColor
@@ -2060,17 +2200,72 @@ SetGridColor
   ;
 SwapGridValues
   : swapGridValues String and String RefreshDef Timing
+    {
+      var ind1 = AsuHelpers.gridCellIdentifierToIndices($2, asuobjs),
+          ind2 = AsuHelpers.gridCellIdentifierToIndices($4, asuobjs),
+          grid1 = asuobjs[AsuHelpers.parseGridCellIdentifier($2)[0]],
+          grid2 = asuobjs[AsuHelpers.parseGridCellIdentifier($4)[0]],
+          i, cell1, cell2;
+      if (ind1.length !== ind2.length) {
+        console.error("Mismatch in size of grid values to swap");
+      }
+      for (i = ind1.length; i-- ;) {
+        cell1 = ind1[i];
+        cell2 = ind2[i];
+        jsav.effects.swapValues(grid1._arrays[cell1[0]], cell1[1],
+                                grid2._arrays[cell2[0]], cell2[1]);
+      }
+    }
   ;
 HighlightGridCell
-  : highlightGridCell String Timing
-  | unhighlightGridCell String Timing
+  : GridCellHlKeyword String Timing
+    {
+      var ind = AsuHelpers.parseGridCellIdentifier($2),
+          grid = asuobjs[ind[0]],
+          func = $1,
+          row = ind[1],
+          column = ind[2],
+          opts = $3;
+      AsuHelpers.callGridFunction(grid, func, row, column, "asugridcellhighlight", opts);
+    }
+  ;
+GridCellHlKeyword
+  : highlightGridCell
+    { $$ = "addClass"; }
+  | unhighlightGridCell
+    { $$ = "removeClass"; }
   ;
 HighlightGridElem
-  : highlightGridElem String Timing
-  | unhighlightGridElem String Timing
+  : GridElemHlKeyword String Timing
+    {
+      var ind = AsuHelpers.parseGridCellIdentifier($2),
+          grid = asuobjs[ind[0]],
+          func = $1,
+          row = ind[1],
+          column = ind[2],
+          opts = $3;
+      AsuHelpers.callGridFunction(grid, func, row, column, "asugridelemhighlight", opts);
+    }
+  ;
+GridElemHlKeyword
+  : highlightGridElem
+    { $$ = "addClass"; }
+  | unhighlightGridElem
+    { $$ = "removeClass"; }
   ;
 AlignGridValue
-  : alignGridValue String AlignDef Timing
+  : alignGridValue String GridAlignKw Timing
+    {
+      var ind = AsuHelpers.parseGridCellIdentifier($2),
+          grid = asuobjs[ind[0]],
+          row = ind[1],
+          column = ind[2],
+          opts = $.extend({}, $4),
+          funcName = "css",
+          align = {"text-align": $3};
+      opts.duration = 0;
+      AsuHelpers.callGridFunction(grid, funcName, row, column, align, opts);
+    }
   ;
 
 VariableOps
@@ -2105,4 +2300,3 @@ EmbedFile
   : embed String
     { console.error("embed commands should be handled before parsing!"); }
   ;
-

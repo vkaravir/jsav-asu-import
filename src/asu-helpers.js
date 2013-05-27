@@ -53,3 +53,67 @@ AsuHelpers._colorCodes = {"black":"0,0,0", "blue": "0,0,255",
 AsuHelpers.colorNameToRGB = function(colorName) {
   return AsuHelpers._colorCodes[colorName];
 };
+AsuHelpers._cellIdentifierRegExp = /(.*)\[([0-9]*)\]\[([0-9]*)\]/;
+AsuHelpers.parseGridCellIdentifier = function(str) {
+  var match = str.match(AsuHelpers._cellIdentifierRegExp),
+      result = [match[1]]; // object identifier
+  if (match[2]) { // cell number
+    result.push(parseInt(match[2], 10));
+  } else {
+    result.push(null);
+  }
+  if (match[3]) { // cell number
+    result.push(parseInt(match[3], 10));
+  } else {
+    result.push(null);
+  }
+  return result;
+};
+AsuHelpers.gridCellIdentifierToIndices = function(str) {
+  var ind = AsuHelpers.parseGridCellIdentifier(str),
+      res = [],
+      grid = asuobjs[ind[0]],
+      i, j;
+  if (typeof ind[1] !== "number") {
+    if (typeof ind[2] !== "number") { // col and row nulls
+      for (i = grid._arrays.length; i--; ) {
+        for (j = grid._arrays[0].size(); j--; ) {
+          res.push([i, j]);
+        }
+      }
+    } else { // row is null
+      for (i = grid._arrays[0].size(); i--; ) {
+        res.push([i, ind[2]]);
+      }
+    }
+  } else if (typeof ind[2] !== "number") { // only col is null
+    for (i = grid._arrays.length; i--; ) {
+      res.push([ind[1], i]);
+    }
+  } else {
+    res.push([ind[1], ind[2]]);
+  }
+  return res;
+};
+AsuHelpers.callGridFunction = function(grid, funcName, row, column, param, opts) {
+  if (row >= grid._arrays.length ||
+      column >= grid._arrays[0].size()) {
+    console.error("Invalid cell (" + row + ",", column +
+                  ") for setGridValue");
+    return;
+  }
+  if (typeof row === "number" && typeof column === "number") {
+    grid[funcName](row, column, param, opts);
+  } else if (typeof row === "number") { // complete row
+    grid[funcName](row, true, param, opts);
+  } else if (typeof column === "number") { // complete column
+    for (i = grid._arrays.length; i--; ) {
+      grid[funcName](i, column, param, opts);
+    }
+  } else { // whole grid
+    for (i = grid._arrays.length; i--; ) {
+      grid[funcName](i, true, param, opts);
+    }
+  }
+
+}
