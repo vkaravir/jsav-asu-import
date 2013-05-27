@@ -5,7 +5,7 @@ CAT = cat
 SRC = src
 TARGET = build
 
-SOURCES = $(SRC)/jsav-asu-import-header.js $(SRC)/asu-helpers.js $(TARGET)/asu.js $(SRC)/jsav-asu-import-footer.js
+SOURCES = $(SRC)/asu-helpers.js $(SRC)/jsav-asu-import-header.js $(TARGET)/asu.js $(SRC)/jsav-asu-import-footer.js
 
 all: build
 
