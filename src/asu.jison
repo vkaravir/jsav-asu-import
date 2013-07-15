@@ -331,7 +331,7 @@
 %%
 
 AnimalScriptFile
-  : FileHeader Commands EOF
+  : FileHeader Commands Eof
   ;
 
 FileHeader
@@ -2299,4 +2299,13 @@ VariableDiscard
 EmbedFile
   : embed String
     { console.error("embed commands should be handled before parsing!"); }
+  ;
+
+Eof
+  : EOF
+    {
+      // cleanup some of the objects we've created
+      asuobjs = null;
+      asugroups = null;
+    }
   ;
