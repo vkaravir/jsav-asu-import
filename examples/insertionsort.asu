@@ -1,0 +1,597 @@
+%Animal 2 640*480
+title "Insertion Sort (ICS2)"
+author "Krasimir Markov <kmarkov@gmail.com>"
+{
+  text "title" "Insertion Sort (ICS2)" (20, 35) color (0, 0, 0) depth 1 font SansSerif size 20 bold
+  rectangle "headerRect" offset (-5, -5) from "title" NW offset (5, 5) from "title" SE color (0, 0, 0) depth 3 filled  fillColor (192, 192, 192)
+  text "descrHd" "Insertion Sort: Synopsis" (20, 80) color (0, 0, 0) depth 1 font SansSerif size 12
+  codegroup "descr" at offset (0, 30) from "descrHd" SW color (0, 0, 0) highlightColor (255, 0, 0) contextColor (0, 0, 0) font SansSerif size 16 bold depth 3
+  addCodeLine "Insertion sort is a simple sorting algorithm, a comparison sort" to "descr"
+  addCodeLine "in which the sorted array (or list) is built one entry at a time." to "descr"
+  addCodeLine "" to "descr"
+  addCodeLine "The process is similar to sorting a deck of cards: in each step a" to "descr"
+  addCodeLine "new card will be inserted in the already sorted ones." to "descr"
+}
+{
+  array "array" (30, 150)  color (0, 0, 0) fillColor (192, 192, 192) elementColor (0, 0, 0) elemHighlight (0, 255, 0) cellHighlight (255, 200, 0) horizontal length 8 "1" "3" "7" "5" "2" "6" "8" "4"  depth 1 font SansSerif size 12
+  codegroup "code" at offset (0, 20) from "array" SW color (0, 0, 0) highlightColor (255, 30, 30) contextColor (0, 0, 0) font Monospaced size 16 bold depth 3
+  addCodeLine "public void insertionSort(int[] array) {" to "code"
+  addCodeLine "for (i=1; i<n; i++) {" to "code" indentation 1
+  addCodeLine "j = i;" to "code" indentation 2
+  addCodeLine "temp = L[i];" to "code" indentation 2
+  addCodeLine "while (j > 0 && L[j-1] > temp) {" to "code" indentation 2
+  addCodeLine "L[j] = L[j-1];" to "code" indentation 3
+  addCodeLine "j = j - 1;" to "code" indentation 3
+  addCodeLine "}" to "code" indentation 2
+  addCodeLine "L[j] = temp;" to "code" indentation 2
+  addCodeLine "}" to "code" indentation 1
+  addCodeLine "}" to "code"
+  text "#A" "Assignments" offset (80, -80) from "array" SE color (0, 0, 0) depth 1 font SansSerif size 12
+  rectangle "Assignments" offset (10, 0) from "#A" NE offset (11, 0) from "#A" SE color (0, 0, 255) depth 2 filled  fillColor (0, 0, 255)
+  text "#C" "Comparisons" offset (0, 35) from "#A" NW color (0, 0, 0) depth 1 font SansSerif size 12
+  rectangle "Comparisons" offset (0, 35) from "Assignments" NW offset (1, 35) from "Assignments" SW color (0, 0, 255) depth 2 filled  fillColor (0, 0, 255)
+  text "Text1" "Zuweisungen: " (500, 100) color (0, 0, 0) depth 1 font SansSerif size 12
+  text "Text2" "Zugriffe: " offset (0, 5) from "Text1" SW color (0, 0, 0) depth 1 font SansSerif size 12
+  text "AssignmentsNumber" "0" offset (5, 0) from "Text1" NE color (0, 0, 0) depth 1 font SansSerif size 12
+  text "AccessesNumber" "0" offset (0, 5) from "AssignmentsNumber" SW color (0, 0, 0) depth 1 font SansSerif size 12
+  rectangle "AssignmentsBar" offset (20, 0) from "AssignmentsNumber" NE offset (20, 0) from "AssignmentsNumber" SE color (0, 0, 0) depth 1 filled  fillColor (0, 0, 255)
+  rectangle "AccessesBar" offset (20, 0) from "AccessesNumber" NE offset (20, 0) from "AccessesNumber" SE color (0, 0, 0) depth 1 filled  fillColor (0, 0, 255)
+  highlightCode on "code" line 0 row 0  
+  text "swapLabel" "temp=" offset (80, -8) from "array" SE color (0, 0, 0) depth 1 font SansSerif size 13
+  text "vValue" "" offset (0, 0) from "swapLabel" baseline end color (0, 0, 0) depth 1 font SansSerif size 13
+  hide "descrHd" "descr" 
+}
+{
+  unhighlightCode on "code" line 0 row 0  
+  highlightCode on "code" line 1 row 0  
+  setText of "vValue" to ""  
+  arrayMarker "iMarker" on "array" atIndex 1 label "i" short  color (0, 0, 255) depth 1
+  move "Comparisons" type "translate #2" along line (0, 0) (2, 0)  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 1 row 0  
+  highlightCode on "code" line 2 row 0  
+  arrayMarker "jMarker" on "array" atIndex 1 label "j" long  color (135, 206, 255) depth 1
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 2 row 0  
+  highlightCode on "code" line 3 row 0  
+  setText of "AccessesNumber" to "1"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+  setText of "vValue" to "3"  
+  highlightArrayElem on "array" position 1  
+}
+{
+  unhighlightCode on "code" line 3 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "2"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 8 row 0  
+  highlightArrayElem on "array" position 1  
+  setText of "AssignmentsNumber" to "1"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "3" on "array" position 1  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 1 row 0  
+  unhighlightArrayElem on "array" position 1  
+  highlightArrayCell on "array" position 1  
+  setText of "vValue" to ""  
+  moveArrayMarker "iMarker" to position 2   
+  move "Comparisons" type "translate #2" along line (0, 0) (2, 0)  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 1 row 0  
+  highlightCode on "code" line 2 row 0  
+  moveArrayMarker "jMarker" to position 2   
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 2 row 0  
+  highlightCode on "code" line 3 row 0  
+  setText of "AccessesNumber" to "3"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+  setText of "vValue" to "7"  
+  highlightArrayElem on "array" position 2  
+}
+{
+  unhighlightCode on "code" line 3 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "4"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 8 row 0  
+  highlightArrayElem on "array" position 2  
+  setText of "AssignmentsNumber" to "2"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "7" on "array" position 2  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 1 row 0  
+  unhighlightArrayElem on "array" position 2  
+  highlightArrayCell on "array" position 2  
+  setText of "vValue" to ""  
+  moveArrayMarker "iMarker" to position 3   
+  move "Comparisons" type "translate #2" along line (0, 0) (2, 0)  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 1 row 0  
+  highlightCode on "code" line 2 row 0  
+  moveArrayMarker "jMarker" to position 3   
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 2 row 0  
+  highlightCode on "code" line 3 row 0  
+  setText of "AccessesNumber" to "5"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+  setText of "vValue" to "5"  
+  highlightArrayElem on "array" position 3  
+}
+{
+  unhighlightCode on "code" line 3 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "6"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+  unhighlightArrayElem on "array" position 2  
+  highlightArrayCell on "array" position 2  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 5 row 0  
+  unhighlightArrayCell on "array" position 2  
+  highlightArrayCell on "array" position 3  
+  setText of "AccessesNumber" to "7"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  setText of "AssignmentsNumber" to "3"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "7" on "array" position 3  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 5 row 0  
+  highlightCode on "code" line 6 row 0  
+  moveArrayMarker "jMarker" to position 2   
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 6 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "8"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 8 row 0  
+  highlightArrayElem on "array" position 2  
+  setText of "AssignmentsNumber" to "4"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "5" on "array" position 2  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 1 row 0  
+  unhighlightArrayElem on "array" position 2  
+  highlightArrayCell on "array" position 2  
+  setText of "vValue" to ""  
+  moveArrayMarker "iMarker" to position 4   
+  move "Comparisons" type "translate #2" along line (0, 0) (2, 0)  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 1 row 0  
+  highlightCode on "code" line 2 row 0  
+  moveArrayMarker "jMarker" to position 4   
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 2 row 0  
+  highlightCode on "code" line 3 row 0  
+  setText of "AccessesNumber" to "9"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+  setText of "vValue" to "2"  
+  highlightArrayElem on "array" position 4  
+}
+{
+  unhighlightCode on "code" line 3 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "10"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+  unhighlightArrayElem on "array" position 3  
+  highlightArrayCell on "array" position 3  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 5 row 0  
+  unhighlightArrayCell on "array" position 3  
+  highlightArrayCell on "array" position 4  
+  setText of "AccessesNumber" to "11"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  setText of "AssignmentsNumber" to "5"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "7" on "array" position 4  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 5 row 0  
+  highlightCode on "code" line 6 row 0  
+  moveArrayMarker "jMarker" to position 3   
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 6 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "12"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+  unhighlightArrayElem on "array" position 2  
+  highlightArrayCell on "array" position 2  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 5 row 0  
+  unhighlightArrayCell on "array" position 2  
+  highlightArrayCell on "array" position 3  
+  setText of "AccessesNumber" to "13"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  setText of "AssignmentsNumber" to "6"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "5" on "array" position 3  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 5 row 0  
+  highlightCode on "code" line 6 row 0  
+  moveArrayMarker "jMarker" to position 2   
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 6 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "14"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+  unhighlightArrayElem on "array" position 1  
+  highlightArrayCell on "array" position 1  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 5 row 0  
+  unhighlightArrayCell on "array" position 1  
+  highlightArrayCell on "array" position 2  
+  setText of "AccessesNumber" to "15"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  setText of "AssignmentsNumber" to "7"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "3" on "array" position 2  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 5 row 0  
+  highlightCode on "code" line 6 row 0  
+  moveArrayMarker "jMarker" to position 1   
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 6 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "16"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 8 row 0  
+  highlightArrayElem on "array" position 1  
+  setText of "AssignmentsNumber" to "8"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "2" on "array" position 1  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 1 row 0  
+  unhighlightArrayElem on "array" position 1  
+  highlightArrayCell on "array" position 1  
+  setText of "vValue" to ""  
+  moveArrayMarker "iMarker" to position 5   
+  move "Comparisons" type "translate #2" along line (0, 0) (2, 0)  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 1 row 0  
+  highlightCode on "code" line 2 row 0  
+  moveArrayMarker "jMarker" to position 5   
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 2 row 0  
+  highlightCode on "code" line 3 row 0  
+  setText of "AccessesNumber" to "17"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+  setText of "vValue" to "6"  
+  highlightArrayElem on "array" position 5  
+}
+{
+  unhighlightCode on "code" line 3 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "18"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+  unhighlightArrayElem on "array" position 4  
+  highlightArrayCell on "array" position 4  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 5 row 0  
+  unhighlightArrayCell on "array" position 4  
+  highlightArrayCell on "array" position 5  
+  setText of "AccessesNumber" to "19"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  setText of "AssignmentsNumber" to "9"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "7" on "array" position 5  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 5 row 0  
+  highlightCode on "code" line 6 row 0  
+  moveArrayMarker "jMarker" to position 4   
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 6 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "20"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 8 row 0  
+  highlightArrayElem on "array" position 4  
+  setText of "AssignmentsNumber" to "10"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "6" on "array" position 4  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 1 row 0  
+  unhighlightArrayElem on "array" position 4  
+  highlightArrayCell on "array" position 4  
+  setText of "vValue" to ""  
+  moveArrayMarker "iMarker" to position 6   
+  move "Comparisons" type "translate #2" along line (0, 0) (2, 0)  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 1 row 0  
+  highlightCode on "code" line 2 row 0  
+  moveArrayMarker "jMarker" to position 6   
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 2 row 0  
+  highlightCode on "code" line 3 row 0  
+  setText of "AccessesNumber" to "21"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+  setText of "vValue" to "8"  
+  highlightArrayElem on "array" position 6  
+}
+{
+  unhighlightCode on "code" line 3 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "22"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 8 row 0  
+  highlightArrayElem on "array" position 6  
+  setText of "AssignmentsNumber" to "11"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "8" on "array" position 6  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 1 row 0  
+  unhighlightArrayElem on "array" position 6  
+  highlightArrayCell on "array" position 6  
+  setText of "vValue" to ""  
+  moveArrayMarker "iMarker" to position 7   
+  move "Comparisons" type "translate #2" along line (0, 0) (2, 0)  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 1 row 0  
+  highlightCode on "code" line 2 row 0  
+  moveArrayMarker "jMarker" to position 7   
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 2 row 0  
+  highlightCode on "code" line 3 row 0  
+  setText of "AccessesNumber" to "23"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+  setText of "vValue" to "4"  
+  highlightArrayElem on "array" position 7  
+}
+{
+  unhighlightCode on "code" line 3 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "24"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+  unhighlightArrayElem on "array" position 6  
+  highlightArrayCell on "array" position 6  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 5 row 0  
+  unhighlightArrayCell on "array" position 6  
+  highlightArrayCell on "array" position 7  
+  setText of "AccessesNumber" to "25"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  setText of "AssignmentsNumber" to "12"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "8" on "array" position 7  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 5 row 0  
+  highlightCode on "code" line 6 row 0  
+  moveArrayMarker "jMarker" to position 6   
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 6 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "26"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+  unhighlightArrayElem on "array" position 5  
+  highlightArrayCell on "array" position 5  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 5 row 0  
+  unhighlightArrayCell on "array" position 5  
+  highlightArrayCell on "array" position 6  
+  setText of "AccessesNumber" to "27"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  setText of "AssignmentsNumber" to "13"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "7" on "array" position 6  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 5 row 0  
+  highlightCode on "code" line 6 row 0  
+  moveArrayMarker "jMarker" to position 5   
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 6 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "28"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+  unhighlightArrayElem on "array" position 4  
+  highlightArrayCell on "array" position 4  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 5 row 0  
+  unhighlightArrayCell on "array" position 4  
+  highlightArrayCell on "array" position 5  
+  setText of "AccessesNumber" to "29"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  setText of "AssignmentsNumber" to "14"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "6" on "array" position 5  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 5 row 0  
+  highlightCode on "code" line 6 row 0  
+  moveArrayMarker "jMarker" to position 4   
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 6 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "30"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+  unhighlightArrayElem on "array" position 3  
+  highlightArrayCell on "array" position 3  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 5 row 0  
+  unhighlightArrayCell on "array" position 3  
+  highlightArrayCell on "array" position 4  
+  setText of "AccessesNumber" to "31"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  setText of "AssignmentsNumber" to "15"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "5" on "array" position 4  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 5 row 0  
+  highlightCode on "code" line 6 row 0  
+  moveArrayMarker "jMarker" to position 3   
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 6 row 0  
+  highlightCode on "code" line 4 row 0  
+  setText of "AccessesNumber" to "32"  
+  move "AccessesBar" type "translate #2" along line (0, 0) (5, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (4, 0)  
+}
+{
+  unhighlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 8 row 0  
+  highlightArrayElem on "array" position 3  
+  setText of "AssignmentsNumber" to "16"  
+  move "AssignmentsBar" type "translate #2" along line (0, 0) (5, 0)  
+  arrayPut "4" on "array" position 3  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 1 row 0  
+  unhighlightArrayElem on "array" position 3  
+  highlightArrayCell on "array" position 3  
+  move "Assignments" type "translate #2" along line (0, 0) (2, 0)  
+  move "Comparisons" type "translate #2" along line (0, 0) (2, 0)  
+  highlightArrayCell on "array" position 7  
+  unhighlightCode on "code" line 1 row 0  
+}
+{
+  text "nrSteps" "Insertion sort performed a total of 47 assignments and 40 comparisons." offset (0, 30) from "code" SW color (0, 0, 0) depth 1 font SansSerif size 12
+  hide "AssignmentsBar" "AccessesBar" "AssignmentsNumber" "AccessesNumber" "Text1" "Text2" 
+}
+{
+  codegroup "complexity" at offset (0, 30) from "title" SW color (0, 0, 0) highlightColor (255, 0, 0) contextColor (0, 0, 0) font SansSerif size 16 bold depth 3
+  addCodeLine "Some comments regarding the complexity class:" to "complexity"
+  addCodeLine "" to "complexity"
+  addCodeLine "Insertion Sort is in general quadratic and will only be linear" to "complexity"
+  addCodeLine "for almost completely sorted input data." to "complexity"
+  hide "nrSteps" "code" "Assignments" "#A" "Comparisons" "#C" "array" "swapLabel" "vValue" 
+}
+{
+  text "adForURL" "Please see http://www.algoanim.info/Animal2 for further animations!" offset (0, 50) from "title" SW color (0, 0, 0) depth 1 font SansSerif size 20 bold
+  hide "complexity" 
+}

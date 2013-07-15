@@ -1,0 +1,796 @@
+%Animal 2 1224*680
+title "Towers of Hanoi"
+author "Amir Naseri, Morteza Emamgholi"
+{
+  rectangle "box" (10, 10) (270, 55) color (0, 0, 0) depth 1 filled  fillColor (255, 255, 0)
+  text "header" "Towers Of Hanoi" (20, 30) color (0, 0, 0) depth 1 font SansSerif size 30 bold
+  text "moves" "Moves: " (640, 30) color (0, 0, 0) depth 1 font SansSerif size 30 bold
+  text "nbrMoves" "0" offset (10, 0) from "moves" NE color (0, 0, 255) depth 1 font SansSerif size 30 bold
+  text "vMove" "Valid Destination" (750, 150) color (255, 200, 0) depth 1 font SansSerif size 30 bold
+  text "ivMove" "Invalid Destination" (720, 150) color (255, 200, 0) depth 1 font SansSerif size 30 bold
+  codegroup "sourceCode" at (20, 200) color (0, 0, 0) highlightColor (255, 0, 0) contextColor (0, 0, 255) font SansSerif size 12 depth 1
+  addCodeLine "public void solveTowersOfHanoi(int nrDisks) {" to "sourceCode"
+  addCodeLine "lastMovedDisk = null;" to "sourceCode" indentation 2
+  addCodeLine "allTowers = {TowerA, TowerB, TowerC};" to "sourceCode" indentation 2
+  addCodeLine "putDisks(TowerA);" to "sourceCode" indentation 2
+  addCodeLine "While ( TowerB.nrDisks() != nrDisks && TowerC.nrDisks() != nrDisks) {" to "sourceCode" indentation 2
+  addCodeLine "for (Tower from : allTowers)" to "sourceCode" indentation 4
+  addCodeLine "if ( from.nrDisks() != 0) {" to "sourceCode" indentation 6
+  addCodeLine "curDisk = from.topDisk();" to "sourceCode" indentation 8
+  addCodeLine "if (curDisk != lastMovedDisk) {" to "sourceCode" indentation 8
+  addCodeLine "if (curDisk.LabelIsOdd)" to "sourceCode" indentation 10
+  addCodeLine "to = from.nextClockwise();" to "sourceCode" indentation 12
+  addCodeLine "else" to "sourceCode" indentation 10
+  addCodeLine "to = from.nextCounterClockwsie();" to "sourceCode" indentation 12
+  addCodeLine "if ( to.nrDisks() == 0 || curDisk.Label < to.topDisk().Label) {" to "sourceCode" indentation 10
+  addCodeLine "moveDisk(from, to);" to "sourceCode" indentation 12
+  addCodeLine "lastMovedDisk = curDisk;" to "sourceCode" indentation 12
+  addCodeLine "break;" to "sourceCode" indentation 12
+  addCodeLine "}" to "sourceCode" indentation 10
+  addCodeLine "}" to "sourceCode" indentation 8
+  addCodeLine "}" to "sourceCode" indentation 6
+  addCodeLine "}" to "sourceCode" indentation 2
+  addCodeLine "}" to "sourceCode"
+  text "nbrDiskslbl" "nrDisks: 3" (20, 80) color (0, 0, 0) depth 1 font SansSerif size 25
+  highlightCode on "sourceCode" line 0 row 0  
+  hide "vMove" "ivMove" 
+}
+{
+  text "lastLbl" "lastMovedDisk: " offset (0, 10) from "nbrDiskslbl" SW color (0, 0, 0) depth 1 font SansSerif size 25
+  text "lastmoved" "null" offset (5, 0) from "lastLbl" NE color (0, 0, 0) depth 1 font SansSerif size 25
+  unhighlightCode on "sourceCode" line 0 row 0  
+  highlightCode on "sourceCode" line 1 row 0  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 1 row 0  
+  highlightCode on "sourceCode" line 2 row 0  
+  rectangle "Rect3" (640, 420) (760, 440) color (0, 0, 0) depth 2 filled  fillColor (0, 0, 0)
+  rectangle "Rect4" (697, 255) (702, 420) color (0, 0, 0) depth 2 filled  fillColor (0, 0, 0)
+  text "Text2" "" offset (45, 20) from "Rect3" SW color (0, 0, 0) depth 1 font SansSerif size 50
+  group "Group1" "Rect3" "Rect4" "Text2" 
+  text "from" "from" offset (-45, -70) from "Rect4" N color (0, 255, 0) depth 1 font SansSerif size 50
+  text "to" "to" offset (-15, -70) from "Rect4" N color (0, 255, 0) depth 1 font SansSerif size 50
+  rectangle "A" (640, 420) (760, 440) color (0, 0, 0) depth 2 filled  fillColor (0, 0, 0)
+  rectangle "Rect5" (697, 255) (702, 420) color (0, 0, 0) depth 2 filled  fillColor (0, 0, 0)
+  text "Text3" "A" offset (45, 20) from "A" SW color (0, 0, 0) depth 1 font SansSerif size 50
+  group "Group2" "A" "Rect5" "Text3" 
+  text "Text4" "from" offset (-45, -70) from "Rect5" N color (0, 255, 0) depth 1 font SansSerif size 50
+  text "Text5" "to" offset (-15, -70) from "Rect5" N color (0, 255, 0) depth 1 font SansSerif size 50
+  rectangle "B" (800, 420) (920, 440) color (0, 0, 0) depth 2 filled  fillColor (0, 0, 0)
+  rectangle "Rect6" (857, 255) (862, 420) color (0, 0, 0) depth 2 filled  fillColor (0, 0, 0)
+  text "Text6" "B" offset (45, 20) from "B" SW color (0, 0, 0) depth 1 font SansSerif size 50
+  group "Group3" "B" "Rect6" "Text6" 
+  text "Text7" "from" offset (-45, -70) from "Rect6" N color (0, 255, 0) depth 1 font SansSerif size 50
+  text "Text8" "to" offset (-15, -70) from "Rect6" N color (0, 255, 0) depth 1 font SansSerif size 50
+  rectangle "C" (960, 420) (1080, 440) color (0, 0, 0) depth 2 filled  fillColor (0, 0, 0)
+  rectangle "Rect7" (1017, 255) (1022, 420) color (0, 0, 0) depth 2 filled  fillColor (0, 0, 0)
+  text "Text9" "C" offset (45, 20) from "C" SW color (0, 0, 0) depth 1 font SansSerif size 50
+  group "Group4" "C" "Rect7" "Text9" 
+  text "Text10" "from" offset (-45, -70) from "Rect7" N color (0, 255, 0) depth 1 font SansSerif size 50
+  text "Text11" "to" offset (-15, -70) from "Rect7" N color (0, 255, 0) depth 1 font SansSerif size 50
+  hide "from" "to" "Text4" "Text5" "Text7" "Text8" "Text10" "Text11" 
+}
+{
+  unhighlightCode on "sourceCode" line 2 row 0  
+  highlightCode on "sourceCode" line 3 row 0  
+  rectangle "Rect8" (685, 405) (715, 420) color (0, 0, 0) depth 1 filled  fillColor (255, 255, 0)
+  text "Disk" "1" offset (-1, -7) from "Rect8" C color (0, 0, 0) depth 1 font SansSerif size 10 bold
+  text "Text12" "1" offset (-1, -7) from "Rect8" C color (0, 0, 0) depth 1 font SansSerif size 10 bold
+  group "Group5" "Rect8" "Text12" 
+  rectangle "Rect9" (680, 405) (720, 420) color (0, 0, 0) depth 1 filled  fillColor (255, 255, 0)
+  text "Text13" "2" offset (-1, -7) from "Rect9" C color (0, 0, 0) depth 1 font SansSerif size 10 bold
+  text "Text14" "2" offset (-1, -7) from "Rect9" C color (0, 0, 0) depth 1 font SansSerif size 10 bold
+  group "Group6" "Rect9" "Text14" 
+  rectangle "Rect10" (675, 405) (725, 420) color (0, 0, 0) depth 1 filled  fillColor (255, 255, 0)
+  text "Text15" "3" offset (-1, -7) from "Rect10" C color (0, 0, 0) depth 1 font SansSerif size 10 bold
+  text "Text16" "3" offset (-1, -7) from "Rect10" C color (0, 0, 0) depth 1 font SansSerif size 10 bold
+  group "Group7" "Rect10" "Text16" 
+  move "Group5" along line (0, 0) (0, -30)   within 15 ticks
+  move "Group6" along line (0, 0) (0, -15)   within 15 ticks
+  move "Group7" along line (0, 0) (0, 0)   within 15 ticks
+  hide "Disk" "Text13" "Text15" 
+}
+{
+  unhighlightCode on "sourceCode" line 3 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+  color "nbrDiskslbl" (255, 0, 0)  
+}
+{
+  color "nbrDiskslbl" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  show "Text4" 
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+  color "Rect8" type "FillColor" (0, 255, 255)  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 10 row 0  
+  show "Text8" 
+}
+{
+  unhighlightCode on "sourceCode" line 10 row 0  
+  highlightCode on "sourceCode" line 13 row 0  
+  show "vMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 13 row 0  
+  highlightCode on "sourceCode" line 14 row 0  
+  move "Group5" along polyline (0, 0) (0, -150) (160, -150) (160, 30)  within 90 ticks
+  setText of "nbrMoves" to "1"  
+  hide "vMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  highlightCode on "sourceCode" line 15 row 0  
+  setText of "lastmoved" to "Disk 1"  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+  hide "Text8" "Text4" 
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  color "Rect8" type "FillColor" (255, 255, 0)  
+  unhighlightCode on "sourceCode" line 15 row 0  
+  highlightCode on "sourceCode" line 16 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 16 row 0  
+  highlightCode on "sourceCode" line 20 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 20 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+  color "nbrDiskslbl" (255, 0, 0)  
+  hide "Text4" 
+}
+{
+  color "Rect8" type "FillColor" (255, 255, 0)  
+  color "nbrDiskslbl" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  show "Text4" 
+  hide "Text8" 
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+  color "Rect9" type "FillColor" (0, 255, 255)  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 11 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 11 row 0  
+  highlightCode on "sourceCode" line 12 row 0  
+  show "Text11" 
+}
+{
+  unhighlightCode on "sourceCode" line 12 row 0  
+  highlightCode on "sourceCode" line 13 row 0  
+  show "vMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 13 row 0  
+  highlightCode on "sourceCode" line 14 row 0  
+  move "Group6" along polyline (0, 0) (0, -165) (320, -165) (320, 15)  within 90 ticks
+  setText of "nbrMoves" to "2"  
+  hide "vMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  highlightCode on "sourceCode" line 15 row 0  
+  setText of "lastmoved" to "Disk 2"  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+  hide "Text11" "Text4" 
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  color "Rect9" type "FillColor" (255, 255, 0)  
+  unhighlightCode on "sourceCode" line 15 row 0  
+  highlightCode on "sourceCode" line 16 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 16 row 0  
+  highlightCode on "sourceCode" line 20 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 20 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+  color "nbrDiskslbl" (255, 0, 0)  
+  hide "Text4" 
+}
+{
+  color "Rect9" type "FillColor" (255, 255, 0)  
+  color "nbrDiskslbl" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  show "Text4" 
+  hide "Text11" 
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+  color "Rect10" type "FillColor" (0, 255, 255)  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 10 row 0  
+  show "Text8" 
+}
+{
+  unhighlightCode on "sourceCode" line 10 row 0  
+  highlightCode on "sourceCode" line 13 row 0  
+  show "ivMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 13 row 0  
+  highlightCode on "sourceCode" line 17 row 0  
+  hide "ivMove" 
+}
+{
+  color "Rect10" type "FillColor" (255, 255, 0)  
+  unhighlightCode on "sourceCode" line 17 row 0  
+  highlightCode on "sourceCode" line 18 row 0  
+  hide "Text8" 
+}
+{
+  unhighlightCode on "sourceCode" line 18 row 0  
+  highlightCode on "sourceCode" line 19 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 19 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  show "Text7" 
+  hide "Text4" 
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+  color "Rect8" type "FillColor" (0, 255, 255)  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 10 row 0  
+  show "Text11" 
+}
+{
+  unhighlightCode on "sourceCode" line 10 row 0  
+  highlightCode on "sourceCode" line 13 row 0  
+  show "vMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 13 row 0  
+  highlightCode on "sourceCode" line 14 row 0  
+  move "Group5" along polyline (0, 0) (0, -180) (160, -180) (160, -15) within 90 ticks
+  setText of "nbrMoves" to "3"  
+  hide "vMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  highlightCode on "sourceCode" line 15 row 0  
+  setText of "lastmoved" to "Disk 1"  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+  hide "Text11" "Text7" 
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  color "Rect8" type "FillColor" (255, 255, 0)  
+  unhighlightCode on "sourceCode" line 15 row 0  
+  highlightCode on "sourceCode" line 16 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 16 row 0  
+  highlightCode on "sourceCode" line 20 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 20 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+  color "nbrDiskslbl" (255, 0, 0)  
+  hide "Text7" 
+}
+{
+  color "Rect8" type "FillColor" (255, 255, 0)  
+  color "nbrDiskslbl" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  show "Text4" 
+  hide "Text11" 
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+  color "Rect10" type "FillColor" (0, 255, 255)  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 10 row 0  
+  show "Text8" 
+}
+{
+  unhighlightCode on "sourceCode" line 10 row 0  
+  highlightCode on "sourceCode" line 13 row 0  
+  show "vMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 13 row 0  
+  highlightCode on "sourceCode" line 14 row 0  
+  move "Group7" along polyline (0, 0) (0, -180) (160, -180) (160, 0)   within 90 ticks
+  setText of "nbrMoves" to "4"  
+  hide "vMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  highlightCode on "sourceCode" line 15 row 0  
+  setText of "lastmoved" to "Disk 3"  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+  hide "Text8" "Text4" 
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  color "Rect10" type "FillColor" (255, 255, 0)  
+  unhighlightCode on "sourceCode" line 15 row 0  
+  highlightCode on "sourceCode" line 16 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 16 row 0  
+  highlightCode on "sourceCode" line 20 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 20 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+  color "nbrDiskslbl" (255, 0, 0)  
+  hide "Text4" 
+}
+{
+  color "Rect10" type "FillColor" (255, 255, 0)  
+  color "nbrDiskslbl" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  show "Text4" 
+  hide "Text8" 
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 19 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 19 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  show "Text7" 
+  hide "Text4" 
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+  color "Rect10" type "FillColor" (0, 255, 255)  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  color "Rect10" type "FillColor" (255, 255, 0)  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 18 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 18 row 0  
+  highlightCode on "sourceCode" line 19 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 19 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  show "Text10" 
+  hide "Text7" 
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+  color "Rect8" type "FillColor" (0, 255, 255)  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 10 row 0  
+  show "Text5" 
+}
+{
+  unhighlightCode on "sourceCode" line 10 row 0  
+  highlightCode on "sourceCode" line 13 row 0  
+  show "vMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 13 row 0  
+  highlightCode on "sourceCode" line 14 row 0  
+  move "Group5" along line (0, 0) (0, -165) (-320, -165) (-320, 15)  within 90 ticks
+  setText of "nbrMoves" to "5"  
+  hide "vMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  highlightCode on "sourceCode" line 15 row 0  
+  setText of "lastmoved" to "Disk 1"  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+  hide "Text5" "Text10" 
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  color "Rect8" type "FillColor" (255, 255, 0)  
+  unhighlightCode on "sourceCode" line 15 row 0  
+  highlightCode on "sourceCode" line 16 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 16 row 0  
+  highlightCode on "sourceCode" line 20 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 20 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+  color "nbrDiskslbl" (255, 0, 0)  
+  hide "Text10" 
+}
+{
+  color "Rect8" type "FillColor" (255, 255, 0)  
+  color "nbrDiskslbl" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  show "Text4" 
+  hide "Text5" 
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+  color "Rect8" type "FillColor" (0, 255, 255)  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  color "Rect8" type "FillColor" (255, 255, 0)  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 18 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 18 row 0  
+  highlightCode on "sourceCode" line 19 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 19 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  show "Text7" 
+  hide "Text4" 
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+  color "Rect10" type "FillColor" (0, 255, 255)  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 10 row 0  
+  show "Text11" 
+}
+{
+  unhighlightCode on "sourceCode" line 10 row 0  
+  highlightCode on "sourceCode" line 13 row 0  
+  show "ivMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 13 row 0  
+  highlightCode on "sourceCode" line 17 row 0  
+  hide "ivMove" 
+}
+{
+  color "Rect10" type "FillColor" (255, 255, 0)  
+  unhighlightCode on "sourceCode" line 17 row 0  
+  highlightCode on "sourceCode" line 18 row 0  
+  hide "Text11" 
+}
+{
+  unhighlightCode on "sourceCode" line 18 row 0  
+  highlightCode on "sourceCode" line 19 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 19 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  show "Text10" 
+  hide "Text7" 
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+  color "Rect9" type "FillColor" (0, 255, 255)  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 11 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 11 row 0  
+  highlightCode on "sourceCode" line 12 row 0  
+  show "Text8" 
+}
+{
+  unhighlightCode on "sourceCode" line 12 row 0  
+  highlightCode on "sourceCode" line 13 row 0  
+  show "vMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 13 row 0  
+  highlightCode on "sourceCode" line 14 row 0  
+  move "Group6" along polyline (0, 0) (0, -180) (-160, -180) (-160, -15)  within 90 ticks
+  setText of "nbrMoves" to "6"  
+  hide "vMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  highlightCode on "sourceCode" line 15 row 0  
+  setText of "lastmoved" to "Disk 2"  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+  hide "Text8" "Text10" 
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  color "Rect9" type "FillColor" (255, 255, 0)  
+  unhighlightCode on "sourceCode" line 15 row 0  
+  highlightCode on "sourceCode" line 16 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 16 row 0  
+  highlightCode on "sourceCode" line 20 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 20 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+  color "nbrDiskslbl" (255, 0, 0)  
+  hide "Text10" 
+}
+{
+  color "Rect9" type "FillColor" (255, 255, 0)  
+  color "nbrDiskslbl" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  show "Text4" 
+  hide "Text8" 
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+  color "Rect8" type "FillColor" (0, 255, 255)  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 10 row 0  
+  show "Text8" 
+}
+{
+  unhighlightCode on "sourceCode" line 10 row 0  
+  highlightCode on "sourceCode" line 13 row 0  
+  show "vMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 13 row 0  
+  highlightCode on "sourceCode" line 14 row 0  
+  move "Group5" along polyline (0, 0) (0, -180) (160, -180) (160, -30) within 90 ticks
+  setText of "nbrMoves" to "7"  
+  hide "vMove" 
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  highlightCode on "sourceCode" line 15 row 0  
+  setText of "lastmoved" to "Disk 1"  
+  color "lastLbl" (255, 0, 0)  
+  color "lastmoved" (255, 0, 0)  
+  hide "Text8" "Text4" 
+}
+{
+  color "lastLbl" (0, 0, 0)  
+  color "lastmoved" (0, 0, 0)  
+  color "Rect8" type "FillColor" (255, 255, 0)  
+  unhighlightCode on "sourceCode" line 15 row 0  
+  highlightCode on "sourceCode" line 16 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 16 row 0  
+  highlightCode on "sourceCode" line 20 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 20 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+  color "nbrDiskslbl" (255, 0, 0)  
+  hide "Text4" 
+}
+{
+  color "Rect8" type "FillColor" (255, 255, 0)  
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 21 row 0  
+  color "nbrDiskslbl" (0, 0, 0)  
+  hide "Text8" 
+}
+{
+  unhighlightCode on "sourceCode" line 21 row 0  
+}

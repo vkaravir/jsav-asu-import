@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Insertion Sort - ASU Import Test</title>
+    <link rel="stylesheet" href="lib/JSAV.css" />
+  </head>
+  <body>
+    <div id="asucontainer">
+      <div class="jsavcounter"></div>
+      <div class="jsavcontrols"></div>
+    </div>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/jquery-ui.min.js"></script>
+    <script src="lib/jquery.transform.light.js"></script>
+    <script src="lib/raphael.js"></script>
+    <script src="lib/JSAV-min.js"></script>
+    <script src="jsav-asu-import.js"></script>
+    <script>
+      var av = new JSAV("asucontainer");
+      av.importAsu("insertionsort.asu");
+    </script>
+  </body>
+</html>

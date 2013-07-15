@@ -1,0 +1,839 @@
+%Animal 2 1240*880
+title "LZW"
+author "Florian Lindner"
+{
+  text "title" "LZW" (20, 35) color (0, 0, 0) depth 1 font SansSerif size 20 bold
+  rectangle "headerRect" offset (-5, -5) from "title" NW offset (5, 5) from "title" SE color (0, 0, 0) depth 2 filled  fillColor (255, 255, 255)
+  text "descrHd" "Description of the algorithm" (20, 80) color (0, 0, 0) depth 1 font SansSerif size 20 bold
+  codegroup "descr" at offset (0, 30) from "descrHd" SW color (0, 0, 0) highlightColor (0, 0, 0) contextColor (0, 0, 0) font SansSerif size 16 depth 3
+  addCodeLine "The Lempel-Ziv-Welch (LZW) algorithm is a lossless compression algorithm." to "descr"
+  addCodeLine "It uses a dictionary to replace character sequences that occur multiple times" to "descr"
+  addCodeLine "in the text by a key. For the textual input demonstrated here, each character is" to "descr"
+  addCodeLine "represented by its ASCII value." to "descr"
+  addCodeLine "" to "descr"
+  addCodeLine "One strength of the LZW algorithm is that no dictionary has to be transmitted," to "descr"
+  addCodeLine "as the dictionary can be created at run-time both during the compression and the" to "descr"
+  addCodeLine "decompression phase. A given input sequence will be added to the dictionary if it" to "descr"
+  addCodeLine "is not contained in the dictionary, but its prefix already is in the dictionary." to "descr"
+}
+{
+  text "inWords" "Verbal description" (20, 100) color (0, 0, 0) depth 1 font Serif size 22 italic
+  hide "descrHd" "descr" 
+}
+{
+  text "line0" "0) At runtime, the algorithm will construct a dictionary." offset (0, 100) from "title" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "Text2" "Single character are encoded according to the ASCII standard," offset (0, 20) from "line0" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "Text3" "occupying the positions 0 to 255. Element 256+ will be created later" offset (0, 20) from "Text2" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  text "line1" "1) Iterate over the input character by character" offset (0, 40) from "Text3" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  text "line2" "2) Examine for each position the preceding character or a prefix built in step 3)" offset (0, 40) from "line1" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  text "line3" "3) If the combination of prefix and current char is contained in the dictionary," offset (0, 40) from "line2" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "line31" "add the current character to the prefix and continue with the next char in 2)" offset (0, 20) from "line3" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  text "line4" "4) Otherwise, encode the prefix of the current char based on the dictionary;" offset (0, 40) from "line31" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "line41" "then concatenate prefix and current char and add this to the dictionary; go to 2)" offset (0, 20) from "line4" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  array "stringArray" offset (0, 100) from "title" SW color (0, 0, 0) fillColor (255, 255, 255) elementColor (0, 0, 0) elemHighlight (255, 0, 0) cellHighlight (255, 255, 0) horizontal length 22 "L" "Z" "W" "L" "Z" "7" "8" "L" "Z" "7" "7" "L" "Z" "C" "L" "Z" "M" "W" "L" "Z" "A" "P"  depth 1 font SansSerif size 12
+  codegroup "code" at offset (0, 50) from "stringArray" SW color (0, 0, 0) highlightColor (255, 0, 0) contextColor (0, 0, 0) font SansSerif size 16 depth 3
+  addCodeLine "public static void lzw(String[] text) {" to "code"
+  addCodeLine "String w, k, result;" to "code" indentation 1
+  addCodeLine "int cnt = 256;" to "code" indentation 1
+  addCodeLine "Hashtable<String, Integer> dict = new Hashtable<String, Integer>();" to "code" indentation 1
+  addCodeLine "for (int i = 0; i < 256;i++) {" to "code" indentation 1
+  addCodeLine "dict.put(String.valueOf((char)i), i);" to "code" indentation 2
+  addCodeLine "}" to "code" indentation 1
+  addCodeLine "for (int i = 0; i < text.length; i++) {" to "code" indentation 1
+  addCodeLine "k = text[i];" to "code" indentation 2
+  addCodeLine "if (dict.containsKey(w + k))" to "code" indentation 2
+  addCodeLine "w = w + k;" to "code" indentation 3
+  addCodeLine "else {" to "code" indentation 2
+  addCodeLine "result += dict.get(w);" to "code" indentation 3
+  addCodeLine "dict.put(w + k, cnt);" to "code" indentation 3
+  addCodeLine "cnt++;" to "code" indentation 3
+  addCodeLine "w = k;" to "code" indentation 3
+  addCodeLine "}" to "code" indentation 2
+  addCodeLine "}" to "code" indentation 1
+  addCodeLine "}" to "code"
+  hide "inWords" "line0" "Text2" "Text3" "line1" "line2" "line3" "line31" "line4" "line41" 
+}
+{
+  highlightCode on "code" line 0 row 0  
+}
+{
+  unhighlightCode on "code" line 0 row 0  
+  highlightCode on "code" line 1 row 0  
+}
+{
+  unhighlightCode on "code" line 1 row 0  
+  highlightCode on "code" line 2 row 0  
+}
+{
+  unhighlightCode on "code" line 2 row 0  
+  highlightCode on "code" line 3 row 0  
+}
+{
+  unhighlightCode on "code" line 3 row 0  
+  highlightCode on "code" line 4 row 0  
+  highlightCode on "code" line 5 row 0  
+  highlightCode on "code" line 6 row 0  
+  arrayMarker "arrayMarker" on "stringArray" atIndex 0 label "i" color (0, 0, 0) depth 1
+  text "w" "w: " offset (0, 50) from "code" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "k" "k: " offset (0, 20) from "w" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "output" "Output:" offset (0, 30) from "k" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "Text4" "" offset (15, -5) from "output" SE color (0, 0, 0) depth 1 font SansSerif size 16
+  color "Text4" (0, 0, 255)  
+  unhighlightCode on "code" line 6 row 0  
+  unhighlightCode on "code" line 5 row 0  
+  unhighlightCode on "code" line 4 row 0  
+  moveArrayMarker "arrayMarker" to position 0   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  L"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 10 row 0  
+  setText of "w" to "w: L"  
+}
+{
+  unhighlightCode on "code" line 10 row 0  
+  moveArrayMarker "arrayMarker" to position 1   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  Z"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 11 row 0  
+}
+{
+  highlightCode on "code" line 12 row 0  
+  setText of "Text4" to "76 "  
+}
+{
+  unhighlightCode on "code" line 12 row 0  
+  highlightCode on "code" line 13 row 0  
+  text "dictText256" "LZ" offset (40, -200) from "code" NE color (0, 0, 0) depth 1 font SansSerif size 16
+  text "dictVal256" "256" offset (70, 0) from "dictText256" baseline start color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  unhighlightCode on "code" line 13 row 0  
+  highlightCode on "code" line 14 row 0  
+}
+{
+  unhighlightCode on "code" line 14 row 0  
+  highlightCode on "code" line 15 row 0  
+  setText of "w" to "w: Z"  
+}
+{
+  unhighlightCode on "code" line 15 row 0  
+  unhighlightCode on "code" line 11 row 0  
+  moveArrayMarker "arrayMarker" to position 2   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  W"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 11 row 0  
+}
+{
+  highlightCode on "code" line 12 row 0  
+  setText of "Text4" to "76 90 "  
+}
+{
+  unhighlightCode on "code" line 12 row 0  
+  highlightCode on "code" line 13 row 0  
+  text "dictText257" "ZW" offset (0, 20) from "dictText256" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "dictVal257" "257" offset (0, 20) from "dictVal256" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  unhighlightCode on "code" line 13 row 0  
+  highlightCode on "code" line 14 row 0  
+}
+{
+  unhighlightCode on "code" line 14 row 0  
+  highlightCode on "code" line 15 row 0  
+  setText of "w" to "w: W"  
+}
+{
+  unhighlightCode on "code" line 15 row 0  
+  unhighlightCode on "code" line 11 row 0  
+  moveArrayMarker "arrayMarker" to position 3   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  L"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 11 row 0  
+}
+{
+  highlightCode on "code" line 12 row 0  
+  setText of "Text4" to "76 90 87 "  
+}
+{
+  unhighlightCode on "code" line 12 row 0  
+  highlightCode on "code" line 13 row 0  
+  text "dictText258" "WL" offset (0, 20) from "dictText257" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "dictVal258" "258" offset (0, 20) from "dictVal257" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  unhighlightCode on "code" line 13 row 0  
+  highlightCode on "code" line 14 row 0  
+}
+{
+  unhighlightCode on "code" line 14 row 0  
+  highlightCode on "code" line 15 row 0  
+  setText of "w" to "w: L"  
+}
+{
+  unhighlightCode on "code" line 15 row 0  
+  unhighlightCode on "code" line 11 row 0  
+  moveArrayMarker "arrayMarker" to position 4   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  Z"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+  color "dictText256" type "color" (255, 0, 0)  
+  color "dictVal256" type "color" (255, 0, 0)  
+}
+{
+  color "dictText256" type "color" (0, 0, 0)  
+  color "dictVal256" type "color" (0, 0, 0)  
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 10 row 0  
+  setText of "w" to "w: LZ"  
+}
+{
+  unhighlightCode on "code" line 10 row 0  
+  moveArrayMarker "arrayMarker" to position 5   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  7"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 11 row 0  
+}
+{
+  highlightCode on "code" line 12 row 0  
+  setText of "Text4" to "76 90 87 256 "  
+}
+{
+  unhighlightCode on "code" line 12 row 0  
+  highlightCode on "code" line 13 row 0  
+  text "dictText259" "LZ7" offset (0, 20) from "dictText258" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "dictVal259" "259" offset (0, 20) from "dictVal258" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  unhighlightCode on "code" line 13 row 0  
+  highlightCode on "code" line 14 row 0  
+}
+{
+  unhighlightCode on "code" line 14 row 0  
+  highlightCode on "code" line 15 row 0  
+  setText of "w" to "w: 7"  
+}
+{
+  unhighlightCode on "code" line 15 row 0  
+  unhighlightCode on "code" line 11 row 0  
+  moveArrayMarker "arrayMarker" to position 6   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  8"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 11 row 0  
+}
+{
+  highlightCode on "code" line 12 row 0  
+  setText of "Text4" to "76 90 87 256 55 "  
+}
+{
+  unhighlightCode on "code" line 12 row 0  
+  highlightCode on "code" line 13 row 0  
+  text "dictText260" "78" offset (0, 20) from "dictText259" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "dictVal260" "260" offset (0, 20) from "dictVal259" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  unhighlightCode on "code" line 13 row 0  
+  highlightCode on "code" line 14 row 0  
+}
+{
+  unhighlightCode on "code" line 14 row 0  
+  highlightCode on "code" line 15 row 0  
+  setText of "w" to "w: 8"  
+}
+{
+  unhighlightCode on "code" line 15 row 0  
+  unhighlightCode on "code" line 11 row 0  
+  moveArrayMarker "arrayMarker" to position 7   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  L"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 11 row 0  
+}
+{
+  highlightCode on "code" line 12 row 0  
+  setText of "Text4" to "76 90 87 256 55 56 "  
+}
+{
+  unhighlightCode on "code" line 12 row 0  
+  highlightCode on "code" line 13 row 0  
+  text "dictText261" "8L" offset (0, 20) from "dictText260" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "dictVal261" "261" offset (0, 20) from "dictVal260" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  unhighlightCode on "code" line 13 row 0  
+  highlightCode on "code" line 14 row 0  
+}
+{
+  unhighlightCode on "code" line 14 row 0  
+  highlightCode on "code" line 15 row 0  
+  setText of "w" to "w: L"  
+}
+{
+  unhighlightCode on "code" line 15 row 0  
+  unhighlightCode on "code" line 11 row 0  
+  moveArrayMarker "arrayMarker" to position 8   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  Z"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+  color "dictText256" type "color" (255, 0, 0)  
+  color "dictVal256" type "color" (255, 0, 0)  
+}
+{
+  color "dictText256" type "color" (0, 0, 0)  
+  color "dictVal256" type "color" (0, 0, 0)  
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 10 row 0  
+  setText of "w" to "w: LZ"  
+}
+{
+  unhighlightCode on "code" line 10 row 0  
+  moveArrayMarker "arrayMarker" to position 9   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  7"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+  color "dictText259" type "color" (255, 0, 0)  
+  color "dictVal259" type "color" (255, 0, 0)  
+}
+{
+  color "dictText259" type "color" (0, 0, 0)  
+  color "dictVal259" type "color" (0, 0, 0)  
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 10 row 0  
+  setText of "w" to "w: LZ7"  
+}
+{
+  unhighlightCode on "code" line 10 row 0  
+  moveArrayMarker "arrayMarker" to position 10   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  7"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 11 row 0  
+}
+{
+  highlightCode on "code" line 12 row 0  
+  setText of "Text4" to "76 90 87 256 55 56 259 "  
+}
+{
+  unhighlightCode on "code" line 12 row 0  
+  highlightCode on "code" line 13 row 0  
+  text "dictText262" "LZ77" offset (0, 20) from "dictText261" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "dictVal262" "262" offset (0, 20) from "dictVal261" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  unhighlightCode on "code" line 13 row 0  
+  highlightCode on "code" line 14 row 0  
+}
+{
+  unhighlightCode on "code" line 14 row 0  
+  highlightCode on "code" line 15 row 0  
+  setText of "w" to "w: 7"  
+}
+{
+  unhighlightCode on "code" line 15 row 0  
+  unhighlightCode on "code" line 11 row 0  
+  moveArrayMarker "arrayMarker" to position 11   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  L"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 11 row 0  
+}
+{
+  highlightCode on "code" line 12 row 0  
+  setText of "Text4" to "76 90 87 256 55 56 259 55 "  
+}
+{
+  unhighlightCode on "code" line 12 row 0  
+  highlightCode on "code" line 13 row 0  
+  text "dictText263" "7L" offset (0, 20) from "dictText262" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "dictVal263" "263" offset (0, 20) from "dictVal262" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  unhighlightCode on "code" line 13 row 0  
+  highlightCode on "code" line 14 row 0  
+}
+{
+  unhighlightCode on "code" line 14 row 0  
+  highlightCode on "code" line 15 row 0  
+  setText of "w" to "w: L"  
+}
+{
+  unhighlightCode on "code" line 15 row 0  
+  unhighlightCode on "code" line 11 row 0  
+  moveArrayMarker "arrayMarker" to position 12   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  Z"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+  color "dictText256" type "color" (255, 0, 0)  
+  color "dictVal256" type "color" (255, 0, 0)  
+}
+{
+  color "dictText256" type "color" (0, 0, 0)  
+  color "dictVal256" type "color" (0, 0, 0)  
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 10 row 0  
+  setText of "w" to "w: LZ"  
+}
+{
+  unhighlightCode on "code" line 10 row 0  
+  moveArrayMarker "arrayMarker" to position 13   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  C"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 11 row 0  
+}
+{
+  highlightCode on "code" line 12 row 0  
+  setText of "Text4" to "76 90 87 256 55 56 259 55 256 "  
+}
+{
+  unhighlightCode on "code" line 12 row 0  
+  highlightCode on "code" line 13 row 0  
+  text "dictText264" "LZC" offset (0, 20) from "dictText263" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "dictVal264" "264" offset (0, 20) from "dictVal263" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  unhighlightCode on "code" line 13 row 0  
+  highlightCode on "code" line 14 row 0  
+}
+{
+  unhighlightCode on "code" line 14 row 0  
+  highlightCode on "code" line 15 row 0  
+  setText of "w" to "w: C"  
+}
+{
+  unhighlightCode on "code" line 15 row 0  
+  unhighlightCode on "code" line 11 row 0  
+  moveArrayMarker "arrayMarker" to position 14   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  L"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 11 row 0  
+}
+{
+  highlightCode on "code" line 12 row 0  
+  setText of "Text4" to "76 90 87 256 55 56 259 55 256 67 "  
+}
+{
+  unhighlightCode on "code" line 12 row 0  
+  highlightCode on "code" line 13 row 0  
+  text "dictText265" "CL" offset (0, 20) from "dictText264" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "dictVal265" "265" offset (0, 20) from "dictVal264" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  unhighlightCode on "code" line 13 row 0  
+  highlightCode on "code" line 14 row 0  
+}
+{
+  unhighlightCode on "code" line 14 row 0  
+  highlightCode on "code" line 15 row 0  
+  setText of "w" to "w: L"  
+}
+{
+  unhighlightCode on "code" line 15 row 0  
+  unhighlightCode on "code" line 11 row 0  
+  moveArrayMarker "arrayMarker" to position 15   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  Z"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+  color "dictText256" type "color" (255, 0, 0)  
+  color "dictVal256" type "color" (255, 0, 0)  
+}
+{
+  color "dictText256" type "color" (0, 0, 0)  
+  color "dictVal256" type "color" (0, 0, 0)  
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 10 row 0  
+  setText of "w" to "w: LZ"  
+}
+{
+  unhighlightCode on "code" line 10 row 0  
+  moveArrayMarker "arrayMarker" to position 16   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  M"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 11 row 0  
+}
+{
+  highlightCode on "code" line 12 row 0  
+  setText of "Text4" to "76 90 87 256 55 56 259 55 256 67 256 "  
+}
+{
+  unhighlightCode on "code" line 12 row 0  
+  highlightCode on "code" line 13 row 0  
+  text "dictText266" "LZM" offset (0, 20) from "dictText265" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "dictVal266" "266" offset (0, 20) from "dictVal265" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  unhighlightCode on "code" line 13 row 0  
+  highlightCode on "code" line 14 row 0  
+}
+{
+  unhighlightCode on "code" line 14 row 0  
+  highlightCode on "code" line 15 row 0  
+  setText of "w" to "w: M"  
+}
+{
+  unhighlightCode on "code" line 15 row 0  
+  unhighlightCode on "code" line 11 row 0  
+  moveArrayMarker "arrayMarker" to position 17   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  W"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 11 row 0  
+}
+{
+  highlightCode on "code" line 12 row 0  
+  setText of "Text4" to "76 90 87 256 55 56 259 55 256 67 256 77 "  
+}
+{
+  unhighlightCode on "code" line 12 row 0  
+  highlightCode on "code" line 13 row 0  
+  text "dictText267" "MW" offset (0, 20) from "dictText266" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "dictVal267" "267" offset (0, 20) from "dictVal266" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  unhighlightCode on "code" line 13 row 0  
+  highlightCode on "code" line 14 row 0  
+}
+{
+  unhighlightCode on "code" line 14 row 0  
+  highlightCode on "code" line 15 row 0  
+  setText of "w" to "w: W"  
+}
+{
+  unhighlightCode on "code" line 15 row 0  
+  unhighlightCode on "code" line 11 row 0  
+  moveArrayMarker "arrayMarker" to position 18   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  L"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+  color "dictText258" type "color" (255, 0, 0)  
+  color "dictVal258" type "color" (255, 0, 0)  
+}
+{
+  color "dictText258" type "color" (0, 0, 0)  
+  color "dictVal258" type "color" (0, 0, 0)  
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 10 row 0  
+  setText of "w" to "w: WL"  
+}
+{
+  unhighlightCode on "code" line 10 row 0  
+  moveArrayMarker "arrayMarker" to position 19   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  Z"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 11 row 0  
+}
+{
+  highlightCode on "code" line 12 row 0  
+  setText of "Text4" to "76 90 87 256 55 56 259 55 256 67 256 77 258 "  
+}
+{
+  unhighlightCode on "code" line 12 row 0  
+  highlightCode on "code" line 13 row 0  
+  text "dictText268" "WLZ" offset (0, 20) from "dictText267" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "dictVal268" "268" offset (0, 20) from "dictVal267" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  unhighlightCode on "code" line 13 row 0  
+  highlightCode on "code" line 14 row 0  
+}
+{
+  unhighlightCode on "code" line 14 row 0  
+  highlightCode on "code" line 15 row 0  
+  setText of "w" to "w: Z"  
+}
+{
+  unhighlightCode on "code" line 15 row 0  
+  unhighlightCode on "code" line 11 row 0  
+  moveArrayMarker "arrayMarker" to position 20   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  A"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 11 row 0  
+}
+{
+  highlightCode on "code" line 12 row 0  
+  setText of "Text4" to "76 90 87 256 55 56 259 55 256 67 256 77 258 90 "  
+}
+{
+  unhighlightCode on "code" line 12 row 0  
+  highlightCode on "code" line 13 row 0  
+  text "dictText269" "ZA" offset (0, 20) from "dictText268" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "dictVal269" "269" offset (0, 20) from "dictVal268" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  unhighlightCode on "code" line 13 row 0  
+  highlightCode on "code" line 14 row 0  
+}
+{
+  unhighlightCode on "code" line 14 row 0  
+  highlightCode on "code" line 15 row 0  
+  setText of "w" to "w: A"  
+}
+{
+  unhighlightCode on "code" line 15 row 0  
+  unhighlightCode on "code" line 11 row 0  
+  moveArrayMarker "arrayMarker" to position 21   
+  highlightCode on "code" line 7 row 0  
+}
+{
+  unhighlightCode on "code" line 7 row 0  
+  highlightCode on "code" line 8 row 0  
+  setText of "k" to "k:  P"  
+}
+{
+  unhighlightCode on "code" line 8 row 0  
+  highlightCode on "code" line 9 row 0  
+}
+{
+  unhighlightCode on "code" line 9 row 0  
+  highlightCode on "code" line 11 row 0  
+}
+{
+  highlightCode on "code" line 12 row 0  
+  setText of "Text4" to "76 90 87 256 55 56 259 55 256 67 256 77 258 90 65 "  
+}
+{
+  unhighlightCode on "code" line 12 row 0  
+  highlightCode on "code" line 13 row 0  
+  text "dictText270" "AP" offset (0, 20) from "dictText269" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "dictVal270" "270" offset (0, 20) from "dictVal269" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  unhighlightCode on "code" line 13 row 0  
+  highlightCode on "code" line 14 row 0  
+}
+{
+  unhighlightCode on "code" line 14 row 0  
+  highlightCode on "code" line 15 row 0  
+  setText of "w" to "w: P"  
+}
+{
+  unhighlightCode on "code" line 15 row 0  
+  unhighlightCode on "code" line 11 row 0  
+  text "name" "The dictionary does not have to be included, as it can" offset (0, 90) from "output" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "fazit" "be generated on the fly during decompression." offset (0, 20) from "name" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  codegroup "complexity" at offset (0, 30) from "title" SW color (0, 0, 0) highlightColor (255, 0, 0) contextColor (0, 0, 0) font SansSerif size 16 depth 3
+  addCodeLine "Some comments regarding the complexity class" to "complexity"
+  addCodeLine "" to "complexity"
+  addCodeLine "Bubble Sort is in general quadratic and will only be linear" to "complexity"
+  addCodeLine "for almost completely sorted input data." to "complexity"
+  addCodeLine "" to "complexity"
+  addCodeLine "Therefore, it is not one of the faster sorting algorithms and" to "complexity"
+  addCodeLine "should be used sparingly." to "complexity"
+  hide "name" "fazit" "w" "output" "Text4" "k" "code" "stringArray" "dictText260" "dictText269" "dictText256" "dictVal260" "dictVal267" "dictText268" "dictVal264" "dictText263" "dictVal270" "dictVal268" "dictText257" "dictVal265" "dictVal262" "dictVal258" "dictVal266" "dictVal263" "dictText267" "dictVal261" "dictVal259" "dictVal269" "dictVal256" "dictText261" "dictText259" "dictText258" "dictText264" "dictText262" "dictVal257" "dictText266" "dictText270" "dictText265" 
+}
+{
+  text "adForURL" "Further animations are provided at http://www.algoanim.info/Animal2" offset (0, 50) from "title" SW color (0, 0, 0) depth 1 font SansSerif size 20 bold
+  hide "complexity" 
+}
