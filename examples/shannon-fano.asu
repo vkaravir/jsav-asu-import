@@ -1,0 +1,860 @@
+%Animal 2 800*600
+title "Shannon-Fano"
+author "Dieter Hofmann, Artem Vovk"
+{
+  text "title" "Shannon-Fano Coding" (20, 35) color (0, 0, 0) depth 1 font SansSerif size 20 bold
+  rectangle "headerRect" offset (-5, -5) from "title" NW offset (5, 5) from "title" SE color (0, 0, 0) depth 3 filled  fillColor (192, 192, 192)
+  text "alg_description" "Is a variable-length compression algorithm" (20, 100) color (0, 0, 0) depth 1 font Serif size 22 bold
+}
+label "Introduction"
+{
+  text "description" "Description" (20, 100) color (0, 0, 0) depth 1 font Serif size 22 bold
+  hide "alg_description" 
+}
+{
+  text "line0" "1. Extract all unique symbols from a text and count a symbol frequency in this text. " offset (0, 100) from "title" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  text "line1" "2. Sort the lists of symbols according to frequency in descending order" offset (0, 30) from "line0" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "line11" "   (most occurring symbols are on the left and the least on the right)" offset (0, 10) from "line1" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  text "line2" "3. Now split this list into two sections, with the total frequency number " offset (0, 30) from "line11" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "line21" "   of the left section being as close as possible to the total of the right." offset (0, 10) from "line2" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  text "line3" "4. Assign the binary digit 0 to left section and 1 to another: " offset (0, 30) from "line21" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "line31" "   the symbols in the left part have codes starting with 0 and symbols in the second part with 1." offset (0, 10) from "line3" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  text "line4" "5. Recursively apply the steps 3 and 4 to each of the two sections," offset (0, 30) from "line31" SW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "line41" "   adding bits to the codes until no further split can be achieved." offset (0, 10) from "line4" SW color (0, 0, 0) depth 1 font SansSerif size 16
+}
+{
+  grid "grid1" (15,80) lines 7 columns 3 style plain size 13 bold
+  setGridValue "grid1[0][0]" "Char" refresh
+  setGridValue "grid1[0][1]" "Frequency" refresh
+  setGridValue "grid1[0][2]" "Code" refresh
+  setGridValue "grid1[1][0]" "a" refresh 
+setGridValue "grid1[1][1]" "0" refresh 
+setGridValue "grid1[1][2]" "" refresh 
+
+  setGridValue "grid1[2][0]" "f" refresh 
+setGridValue "grid1[2][1]" "0" refresh 
+setGridValue "grid1[2][2]" "" refresh 
+
+  setGridValue "grid1[3][0]" "h" refresh 
+setGridValue "grid1[3][1]" "0" refresh 
+setGridValue "grid1[3][2]" "" refresh 
+
+  setGridValue "grid1[4][0]" "n" refresh 
+setGridValue "grid1[4][1]" "0" refresh 
+setGridValue "grid1[4][2]" "" refresh 
+
+  setGridValue "grid1[5][0]" "o" refresh 
+setGridValue "grid1[5][1]" "0" refresh 
+setGridValue "grid1[5][2]" "" refresh 
+
+  setGridValue "grid1[6][0]" "s" refresh 
+setGridValue "grid1[6][1]" "0" refresh 
+setGridValue "grid1[6][2]" "" refresh 
+
+  codegroup "sourceCode" at offset (10, 20) from "grid1" SW color (0, 0, 0) highlightColor (255, 0, 0) contextColor (0, 255, 255) font Monospaced size 12 depth 1
+  addCodeLine "begin" to "sourceCode"
+  addCodeLine "count source units" to "sourceCode" indentation 1
+  addCodeLine "sort source units to non-decreasing order" to "sourceCode" indentation 1
+  addCodeLine "SF-Split(S)" to "sourceCode" indentation 1
+  addCodeLine "write output" to "sourceCode" indentation 1
+  addCodeLine "end" to "sourceCode"
+  addCodeLine "procedure SF-Split(S)" to "sourceCode"
+  addCodeLine "begin" to "sourceCode"
+  addCodeLine "if (|S|>1) then" to "sourceCode" indentation 1
+  addCodeLine "begin" to "sourceCode" indentation 1
+  addCodeLine "//divide with about same count of units" to "sourceCode" indentation 2
+  addCodeLine "divide S to S1 and S2 " to "sourceCode" indentation 2
+  addCodeLine "add 0 to codes in S1" to "sourceCode" indentation 2
+  addCodeLine "add 1 to codes in S2" to "sourceCode" indentation 2
+  addCodeLine "SF-Split(S1)" to "sourceCode" indentation 2
+  addCodeLine "SF-Split(S2)" to "sourceCode" indentation 2
+  addCodeLine "end" to "sourceCode" indentation 1
+  addCodeLine "end" to "sourceCode"
+  highlightCode on "sourceCode" line 0 row 0  
+  array "textArray" (400, 80) color (0, 0, 0) fillColor (192, 192, 192) elementColor (0, 0, 0) elemHighlight (255, 0, 0) cellHighlight (255, 200, 0) horizontal length 13 "s" "h" "a" "n" "n" "o" "n" "f" "a" "n" "n" "o" "n"  depth 1 font SansSerif size 12
+  hide "description" "line0" "line1" "line11" "line2" "line21" "line3" "line31" "line4" "line41" 
+}
+label "Pseudocode"
+{
+  unhighlightCode on "sourceCode" line 0 row 0  
+  highlightCode on "sourceCode" line 1 row 0  
+}
+{
+  arrayMarker "iMarker" on "textArray" atIndex 0 color (0, 0, 0) depth 1
+  setGridValue "grid1[6][0]" "s" refresh 
+setGridValue "grid1[6][1]" "1" refresh 
+setGridValue "grid1[6][2]" "" refresh 
+
+}
+{
+  moveArrayMarker "iMarker" to position 1   
+  setGridValue "grid1[3][0]" "h" refresh 
+setGridValue "grid1[3][1]" "1" refresh 
+setGridValue "grid1[3][2]" "" refresh 
+
+}
+{
+  moveArrayMarker "iMarker" to position 2   
+  setGridValue "grid1[1][0]" "a" refresh 
+setGridValue "grid1[1][1]" "1" refresh 
+setGridValue "grid1[1][2]" "" refresh 
+
+}
+{
+  moveArrayMarker "iMarker" to position 3   
+  setGridValue "grid1[4][0]" "n" refresh 
+setGridValue "grid1[4][1]" "1" refresh 
+setGridValue "grid1[4][2]" "" refresh 
+
+}
+{
+  moveArrayMarker "iMarker" to position 4   
+  setGridValue "grid1[4][0]" "n" refresh 
+setGridValue "grid1[4][1]" "2" refresh 
+setGridValue "grid1[4][2]" "" refresh 
+
+}
+{
+  moveArrayMarker "iMarker" to position 5   
+  setGridValue "grid1[5][0]" "o" refresh 
+setGridValue "grid1[5][1]" "1" refresh 
+setGridValue "grid1[5][2]" "" refresh 
+
+}
+{
+  moveArrayMarker "iMarker" to position 6   
+  setGridValue "grid1[4][0]" "n" refresh 
+setGridValue "grid1[4][1]" "3" refresh 
+setGridValue "grid1[4][2]" "" refresh 
+
+}
+{
+  moveArrayMarker "iMarker" to position 7   
+  setGridValue "grid1[2][0]" "f" refresh 
+setGridValue "grid1[2][1]" "1" refresh 
+setGridValue "grid1[2][2]" "" refresh 
+
+}
+{
+  moveArrayMarker "iMarker" to position 8   
+  setGridValue "grid1[1][0]" "a" refresh 
+setGridValue "grid1[1][1]" "2" refresh 
+setGridValue "grid1[1][2]" "" refresh 
+
+}
+{
+  moveArrayMarker "iMarker" to position 9   
+  setGridValue "grid1[4][0]" "n" refresh 
+setGridValue "grid1[4][1]" "4" refresh 
+setGridValue "grid1[4][2]" "" refresh 
+
+}
+{
+  moveArrayMarker "iMarker" to position 10   
+  setGridValue "grid1[4][0]" "n" refresh 
+setGridValue "grid1[4][1]" "5" refresh 
+setGridValue "grid1[4][2]" "" refresh 
+
+}
+{
+  moveArrayMarker "iMarker" to position 11   
+  setGridValue "grid1[5][0]" "o" refresh 
+setGridValue "grid1[5][1]" "2" refresh 
+setGridValue "grid1[5][2]" "" refresh 
+
+}
+{
+  moveArrayMarker "iMarker" to position 12   
+  setGridValue "grid1[4][0]" "n" refresh 
+setGridValue "grid1[4][1]" "6" refresh 
+setGridValue "grid1[4][2]" "" refresh 
+
+}
+label "Initialisation"
+{
+  unhighlightCode on "sourceCode" line 1 row 0  
+  highlightCode on "sourceCode" line 2 row 0  
+  hide "textArray" "iMarker" 
+}
+{
+  setGridValue "grid1[1][0]" "n" refresh 
+setGridValue "grid1[1][1]" "6" refresh 
+setGridValue "grid1[1][2]" "" refresh 
+
+  setGridValue "grid1[2][0]" "a" refresh 
+setGridValue "grid1[2][1]" "2" refresh 
+setGridValue "grid1[2][2]" "" refresh 
+
+  setGridValue "grid1[3][0]" "o" refresh 
+setGridValue "grid1[3][1]" "2" refresh 
+setGridValue "grid1[3][2]" "" refresh 
+
+  setGridValue "grid1[4][0]" "f" refresh 
+setGridValue "grid1[4][1]" "1" refresh 
+setGridValue "grid1[4][2]" "" refresh 
+
+  setGridValue "grid1[5][0]" "h" refresh 
+setGridValue "grid1[5][1]" "1" refresh 
+setGridValue "grid1[5][2]" "" refresh 
+
+  setGridValue "grid1[6][0]" "s" refresh 
+setGridValue "grid1[6][1]" "1" refresh 
+setGridValue "grid1[6][2]" "" refresh 
+
+}
+{
+  unhighlightCode on "sourceCode" line 2 row 0  
+  highlightCode on "sourceCode" line 3 row 0  
+}
+label "Algo execution"
+{
+  unhighlightCode on "sourceCode" line 3 row 0  
+  circle "rootNode" (600, 160) radius 20 color (0, 0, 0) depth 1
+  text "lists" "S:" (350, 45) color (0, 0, 0) depth 1 font SansSerif size 15 bold
+  circle "2137344490" offset (10, 10) from "lists" NE radius 20 color (0, 0, 0) depth 1 filled  fillColor (192, 192, 192)
+  circle "1389880061" offset (30, 20) from "2137344490" NE radius 20 color (0, 0, 0) depth 1 filled  fillColor (192, 192, 192)
+  text "N_list" "N" offset (14, 10) from "1389880061" NW color (0, 0, 0) depth 1 font SansSerif size 12
+  text "N_freq" "6" offset (14, -20) from "1389880061" NW color (0, 0, 0) depth 1 font SansSerif size 12
+  circle "1534556808" offset (30, 20) from "1389880061" NE radius 20 color (0, 0, 0) depth 1 filled  fillColor (192, 192, 192)
+  text "A_list" "A" offset (14, 10) from "1534556808" NW color (0, 0, 0) depth 1 font SansSerif size 12
+  text "A_freq" "2" offset (14, -20) from "1534556808" NW color (0, 0, 0) depth 1 font SansSerif size 12
+  circle "17671586" offset (30, 20) from "1534556808" NE radius 20 color (0, 0, 0) depth 1 filled  fillColor (192, 192, 192)
+  text "O_list" "O" offset (14, 10) from "17671586" NW color (0, 0, 0) depth 1 font SansSerif size 12
+  text "O_freq" "2" offset (14, -20) from "17671586" NW color (0, 0, 0) depth 1 font SansSerif size 12
+  circle "653602616" offset (30, 20) from "17671586" NE radius 20 color (0, 0, 0) depth 1 filled  fillColor (192, 192, 192)
+  text "F_list" "F" offset (14, 10) from "653602616" NW color (0, 0, 0) depth 1 font SansSerif size 12
+  text "F_freq" "1" offset (14, -20) from "653602616" NW color (0, 0, 0) depth 1 font SansSerif size 12
+  circle "720312707" offset (30, 20) from "653602616" NE radius 20 color (0, 0, 0) depth 1 filled  fillColor (192, 192, 192)
+  text "H_list" "H" offset (14, 10) from "720312707" NW color (0, 0, 0) depth 1 font SansSerif size 12
+  text "H_freq" "1" offset (14, -20) from "720312707" NW color (0, 0, 0) depth 1 font SansSerif size 12
+  circle "930348410" offset (30, 20) from "720312707" NE radius 20 color (0, 0, 0) depth 1 filled  fillColor (192, 192, 192)
+  text "S_list" "S" offset (14, 10) from "930348410" NW color (0, 0, 0) depth 1 font SansSerif size 12
+  text "S_freq" "1" offset (14, -20) from "930348410" NW color (0, 0, 0) depth 1 font SansSerif size 12
+  unhighlightCode on "sourceCode" line 17 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+  hide "2137344490" 
+}
+label "Iteration 1"
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+}
+{
+  text "rootName013" "f=13" offset (12, -30) from "rootNode" SW color (0, 0, 0) depth 1 font SansSerif size 12
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 11 row 0  
+  color "1389880061" type "fillColor" (192, 192, 192)  
+  color "1534556808" type "fillColor" (192, 192, 192)  
+  color "17671586" type "fillColor" (192, 192, 192)  
+  color "653602616" type "fillColor" (192, 192, 192)  
+  color "720312707" type "fillColor" (192, 192, 192)  
+  color "930348410" type "fillColor" (192, 192, 192)  
+  rectangle "main_rect" offset (-2, -5) from "1389880061" NW offset (2, 5) from "930348410" SE color (0, 0, 0) depth 1
+  setGridValue "grid1[1][0]" "n" refresh 
+setGridValue "grid1[1][1]" "6" refresh 
+setGridValue "grid1[1][2]" "" refresh 
+
+  setGridValue "grid1[2][0]" "a" refresh 
+setGridValue "grid1[2][1]" "2" refresh 
+setGridValue "grid1[2][2]" "" refresh 
+
+  setGridValue "grid1[3][0]" "o" refresh 
+setGridValue "grid1[3][1]" "2" refresh 
+setGridValue "grid1[3][2]" "" refresh 
+
+  setGridValue "grid1[4][0]" "f" refresh 
+setGridValue "grid1[4][1]" "1" refresh 
+setGridValue "grid1[4][2]" "" refresh 
+
+  setGridValue "grid1[5][0]" "h" refresh 
+setGridValue "grid1[5][1]" "1" refresh 
+setGridValue "grid1[5][2]" "" refresh 
+
+  setGridValue "grid1[6][0]" "s" refresh 
+setGridValue "grid1[6][1]" "1" refresh 
+setGridValue "grid1[6][2]" "" refresh 
+
+}
+{
+  unhighlightCode on "sourceCode" line 11 row 0  
+  highlightCode on "sourceCode" line 12 row 0  
+  circle "0Node" offset (-150, 50) from "rootNode" SW radius 20 color (0, 0, 0) depth 1
+  polyline "con00" offset (6, -6) from "rootNode" SW offset (-6, 6) from "0Node" NE color (0, 0, 0) depth 1
+  text "0Text" "0" offset (-14, -15) from "0Node" NE color (0, 0, 0) depth 1 font SansSerif size 12
+  circle "1Node" offset (150, 50) from "rootNode" SE radius 20 color (0, 0, 0) depth 1
+  polyline "con11" offset (-6, -6) from "rootNode" SE offset (6, 6) from "1Node" NW color (0, 0, 0) depth 1
+  text "1Text" "1" offset (8, -15) from "1Node" NW color (0, 0, 0) depth 1 font SansSerif size 12
+}
+{
+  color "1389880061" type "fillColor" (0, 255, 255)  
+  text "S1_t1389880061" "S1" offset (-30, 53) from "1389880061" NE color (0, 0, 0) depth 1 font SansSerif size 15 bold
+  color "1534556808" type "fillColor" (0, 255, 255)  
+  setGridValue "grid1[1][0]" "n" refresh 
+setGridValue "grid1[1][1]" "6" refresh 
+setGridValue "grid1[1][2]" "0" refresh 
+
+  setGridValue "grid1[2][0]" "a" refresh 
+setGridValue "grid1[2][1]" "2" refresh 
+setGridValue "grid1[2][2]" "0" refresh 
+
+  setGridValue "grid1[3][0]" "o" refresh 
+setGridValue "grid1[3][1]" "2" refresh 
+setGridValue "grid1[3][2]" "" refresh 
+
+  setGridValue "grid1[4][0]" "f" refresh 
+setGridValue "grid1[4][1]" "1" refresh 
+setGridValue "grid1[4][2]" "" refresh 
+
+  setGridValue "grid1[5][0]" "h" refresh 
+setGridValue "grid1[5][1]" "1" refresh 
+setGridValue "grid1[5][2]" "" refresh 
+
+  setGridValue "grid1[6][0]" "s" refresh 
+setGridValue "grid1[6][1]" "1" refresh 
+setGridValue "grid1[6][2]" "" refresh 
+
+  unhighlightCode on "sourceCode" line 12 row 0  
+  highlightCode on "sourceCode" line 13 row 0  
+}
+{
+  color "17671586" type "fillColor" (255, 0, 255)  
+  text "S2_t17671586" "S2" offset (-30, 50) from "17671586" NE color (0, 0, 0) depth 1 font SansSerif size 15 bold
+  color "653602616" type "fillColor" (255, 0, 255)  
+  color "720312707" type "fillColor" (255, 0, 255)  
+  color "930348410" type "fillColor" (255, 0, 255)  
+  setGridValue "grid1[1][0]" "n" refresh 
+setGridValue "grid1[1][1]" "6" refresh 
+setGridValue "grid1[1][2]" "0" refresh 
+
+  setGridValue "grid1[2][0]" "a" refresh 
+setGridValue "grid1[2][1]" "2" refresh 
+setGridValue "grid1[2][2]" "0" refresh 
+
+  setGridValue "grid1[3][0]" "o" refresh 
+setGridValue "grid1[3][1]" "2" refresh 
+setGridValue "grid1[3][2]" "1" refresh 
+
+  setGridValue "grid1[4][0]" "f" refresh 
+setGridValue "grid1[4][1]" "1" refresh 
+setGridValue "grid1[4][2]" "1" refresh 
+
+  setGridValue "grid1[5][0]" "h" refresh 
+setGridValue "grid1[5][1]" "1" refresh 
+setGridValue "grid1[5][2]" "1" refresh 
+
+  setGridValue "grid1[6][0]" "s" refresh 
+setGridValue "grid1[6][1]" "1" refresh 
+setGridValue "grid1[6][2]" "1" refresh 
+
+  unhighlightCode on "sourceCode" line 13 row 0  
+  highlightCode on "sourceCode" line 14 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  unhighlightCode on "sourceCode" line 17 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+label "Iteration 2"
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+}
+{
+  text "rootName18" "f=8" offset (12, -30) from "0Node" SW color (0, 0, 0) depth 1 font SansSerif size 12
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 11 row 0  
+  color "1389880061" type "fillColor" (192, 192, 192)  
+  color "1534556808" type "fillColor" (192, 192, 192)  
+  color "17671586" type "fillColor" (192, 192, 192)  
+  color "653602616" type "fillColor" (192, 192, 192)  
+  color "720312707" type "fillColor" (192, 192, 192)  
+  color "930348410" type "fillColor" (192, 192, 192)  
+  rectangle "Rect11" offset (-2, -5) from "1389880061" NW offset (2, 5) from "1534556808" SE color (0, 0, 0) depth 1
+  setGridValue "grid1[1][0]" "n" refresh 
+setGridValue "grid1[1][1]" "6" refresh 
+setGridValue "grid1[1][2]" "0" refresh 
+
+  setGridValue "grid1[2][0]" "a" refresh 
+setGridValue "grid1[2][1]" "2" refresh 
+setGridValue "grid1[2][2]" "0" refresh 
+
+  hide "S1_t1389880061" "S2_t17671586" "main_rect" 
+}
+{
+  unhighlightCode on "sourceCode" line 11 row 0  
+  highlightCode on "sourceCode" line 12 row 0  
+  circle "Circle9" offset (-37, 50) from "0Node" SW radius 20 color (0, 0, 0) depth 1
+  polyline "Polyline9" offset (6, -6) from "0Node" SW offset (-6, 6) from "Circle9" NE color (0, 0, 0) depth 1
+  text "Text14" "0" offset (-14, -15) from "Circle9" NE color (0, 0, 0) depth 1 font SansSerif size 12
+  circle "Circle10" offset (37, 50) from "0Node" SE radius 20 color (0, 0, 0) depth 1
+  polyline "Polyline10" offset (-6, -6) from "0Node" SE offset (6, 6) from "Circle10" NW color (0, 0, 0) depth 1
+  text "Text15" "1" offset (8, -15) from "Circle10" NW color (0, 0, 0) depth 1 font SansSerif size 12
+}
+{
+  color "1389880061" type "fillColor" (0, 255, 255)  
+  text "Text16" "S1" offset (-30, 53) from "1389880061" NE color (0, 0, 0) depth 1 font SansSerif size 15 bold
+  setGridValue "grid1[1][0]" "n" refresh 
+setGridValue "grid1[1][1]" "6" refresh 
+setGridValue "grid1[1][2]" "00" refresh 
+
+  setGridValue "grid1[2][0]" "a" refresh 
+setGridValue "grid1[2][1]" "2" refresh 
+setGridValue "grid1[2][2]" "0" refresh 
+
+  unhighlightCode on "sourceCode" line 12 row 0  
+  highlightCode on "sourceCode" line 13 row 0  
+}
+{
+  color "1534556808" type "fillColor" (255, 0, 255)  
+  text "S2_t1534556808" "S2" offset (-30, 50) from "1534556808" NE color (0, 0, 0) depth 1 font SansSerif size 15 bold
+  setGridValue "grid1[1][0]" "n" refresh 
+setGridValue "grid1[1][1]" "6" refresh 
+setGridValue "grid1[1][2]" "00" refresh 
+
+  setGridValue "grid1[2][0]" "a" refresh 
+setGridValue "grid1[2][1]" "2" refresh 
+setGridValue "grid1[2][2]" "01" refresh 
+
+  unhighlightCode on "sourceCode" line 13 row 0  
+  highlightCode on "sourceCode" line 14 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  unhighlightCode on "sourceCode" line 17 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+label "Iteration 3"
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+}
+{
+  text "NText" "N" offset (12, -30) from "Circle9" SW color (0, 0, 0) depth 1 font SansSerif size 12
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 17 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  highlightCode on "sourceCode" line 15 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 15 row 0  
+  unhighlightCode on "sourceCode" line 17 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+label "Iteration 4"
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+}
+{
+  text "AText" "A" offset (12, -30) from "Circle10" SW color (0, 0, 0) depth 1 font SansSerif size 12
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 17 row 0  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 17 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  highlightCode on "sourceCode" line 15 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 15 row 0  
+  unhighlightCode on "sourceCode" line 17 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+label "Iteration 5"
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+}
+{
+  text "rootName15" "f=5" offset (12, -30) from "1Node" SW color (0, 0, 0) depth 1 font SansSerif size 12
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 11 row 0  
+  color "1389880061" type "fillColor" (192, 192, 192)  
+  color "1534556808" type "fillColor" (192, 192, 192)  
+  color "17671586" type "fillColor" (192, 192, 192)  
+  color "653602616" type "fillColor" (192, 192, 192)  
+  color "720312707" type "fillColor" (192, 192, 192)  
+  color "930348410" type "fillColor" (192, 192, 192)  
+  rectangle "Rect12" offset (-2, -5) from "17671586" NW offset (2, 5) from "930348410" SE color (0, 0, 0) depth 1
+  setGridValue "grid1[3][0]" "o" refresh 
+setGridValue "grid1[3][1]" "2" refresh 
+setGridValue "grid1[3][2]" "1" refresh 
+
+  setGridValue "grid1[4][0]" "f" refresh 
+setGridValue "grid1[4][1]" "1" refresh 
+setGridValue "grid1[4][2]" "1" refresh 
+
+  setGridValue "grid1[5][0]" "h" refresh 
+setGridValue "grid1[5][1]" "1" refresh 
+setGridValue "grid1[5][2]" "1" refresh 
+
+  setGridValue "grid1[6][0]" "s" refresh 
+setGridValue "grid1[6][1]" "1" refresh 
+setGridValue "grid1[6][2]" "1" refresh 
+
+  hide "Text16" "S2_t1534556808" "Rect11" 
+}
+{
+  unhighlightCode on "sourceCode" line 11 row 0  
+  highlightCode on "sourceCode" line 12 row 0  
+  circle "Circle11" offset (-37, 50) from "1Node" SW radius 20 color (0, 0, 0) depth 1
+  polyline "Polyline11" offset (6, -6) from "1Node" SW offset (-6, 6) from "Circle11" NE color (0, 0, 0) depth 1
+  text "Text17" "0" offset (-14, -15) from "Circle11" NE color (0, 0, 0) depth 1 font SansSerif size 12
+  circle "Circle12" offset (37, 50) from "1Node" SE radius 20 color (0, 0, 0) depth 1
+  polyline "Polyline12" offset (-6, -6) from "1Node" SE offset (6, 6) from "Circle12" NW color (0, 0, 0) depth 1
+  text "Text18" "1" offset (8, -15) from "Circle12" NW color (0, 0, 0) depth 1 font SansSerif size 12
+}
+{
+  color "17671586" type "fillColor" (0, 255, 255)  
+  text "S1_t17671586" "S1" offset (-30, 53) from "17671586" NE color (0, 0, 0) depth 1 font SansSerif size 15 bold
+  color "653602616" type "fillColor" (0, 255, 255)  
+  setGridValue "grid1[3][0]" "o" refresh 
+setGridValue "grid1[3][1]" "2" refresh 
+setGridValue "grid1[3][2]" "10" refresh 
+
+  setGridValue "grid1[4][0]" "f" refresh 
+setGridValue "grid1[4][1]" "1" refresh 
+setGridValue "grid1[4][2]" "10" refresh 
+
+  setGridValue "grid1[5][0]" "h" refresh 
+setGridValue "grid1[5][1]" "1" refresh 
+setGridValue "grid1[5][2]" "1" refresh 
+
+  setGridValue "grid1[6][0]" "s" refresh 
+setGridValue "grid1[6][1]" "1" refresh 
+setGridValue "grid1[6][2]" "1" refresh 
+
+  unhighlightCode on "sourceCode" line 12 row 0  
+  highlightCode on "sourceCode" line 13 row 0  
+}
+{
+  color "720312707" type "fillColor" (255, 0, 255)  
+  text "S2_t720312707" "S2" offset (-30, 50) from "720312707" NE color (0, 0, 0) depth 1 font SansSerif size 15 bold
+  color "930348410" type "fillColor" (255, 0, 255)  
+  setGridValue "grid1[3][0]" "o" refresh 
+setGridValue "grid1[3][1]" "2" refresh 
+setGridValue "grid1[3][2]" "10" refresh 
+
+  setGridValue "grid1[4][0]" "f" refresh 
+setGridValue "grid1[4][1]" "1" refresh 
+setGridValue "grid1[4][2]" "10" refresh 
+
+  setGridValue "grid1[5][0]" "h" refresh 
+setGridValue "grid1[5][1]" "1" refresh 
+setGridValue "grid1[5][2]" "11" refresh 
+
+  setGridValue "grid1[6][0]" "s" refresh 
+setGridValue "grid1[6][1]" "1" refresh 
+setGridValue "grid1[6][2]" "11" refresh 
+
+  unhighlightCode on "sourceCode" line 13 row 0  
+  highlightCode on "sourceCode" line 14 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  unhighlightCode on "sourceCode" line 17 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+label "Iteration 6"
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+}
+{
+  text "rootName23" "f=3" offset (12, -30) from "Circle11" SW color (0, 0, 0) depth 1 font SansSerif size 12
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 11 row 0  
+  color "1389880061" type "fillColor" (192, 192, 192)  
+  color "1534556808" type "fillColor" (192, 192, 192)  
+  color "17671586" type "fillColor" (192, 192, 192)  
+  color "653602616" type "fillColor" (192, 192, 192)  
+  color "720312707" type "fillColor" (192, 192, 192)  
+  color "930348410" type "fillColor" (192, 192, 192)  
+  rectangle "Rect13" offset (-2, -5) from "17671586" NW offset (2, 5) from "653602616" SE color (0, 0, 0) depth 1
+  setGridValue "grid1[3][0]" "o" refresh 
+setGridValue "grid1[3][1]" "2" refresh 
+setGridValue "grid1[3][2]" "10" refresh 
+
+  setGridValue "grid1[4][0]" "f" refresh 
+setGridValue "grid1[4][1]" "1" refresh 
+setGridValue "grid1[4][2]" "10" refresh 
+
+  hide "S1_t17671586" "S2_t720312707" "Rect12" 
+}
+{
+  unhighlightCode on "sourceCode" line 11 row 0  
+  highlightCode on "sourceCode" line 12 row 0  
+  circle "Circle13" offset (-16, 50) from "Circle11" SW radius 20 color (0, 0, 0) depth 1
+  polyline "Polyline13" offset (6, -6) from "Circle11" SW offset (-6, 6) from "Circle13" NE color (0, 0, 0) depth 1
+  text "Text19" "0" offset (-14, -15) from "Circle13" NE color (0, 0, 0) depth 1 font SansSerif size 12
+  circle "Circle14" offset (16, 50) from "Circle11" SE radius 20 color (0, 0, 0) depth 1
+  polyline "Polyline14" offset (-6, -6) from "Circle11" SE offset (6, 6) from "Circle14" NW color (0, 0, 0) depth 1
+  text "Text20" "1" offset (8, -15) from "Circle14" NW color (0, 0, 0) depth 1 font SansSerif size 12
+}
+{
+  color "17671586" type "fillColor" (0, 255, 255)  
+  text "Text21" "S1" offset (-30, 53) from "17671586" NE color (0, 0, 0) depth 1 font SansSerif size 15 bold
+  setGridValue "grid1[3][0]" "o" refresh 
+setGridValue "grid1[3][1]" "2" refresh 
+setGridValue "grid1[3][2]" "100" refresh 
+
+  setGridValue "grid1[4][0]" "f" refresh 
+setGridValue "grid1[4][1]" "1" refresh 
+setGridValue "grid1[4][2]" "10" refresh 
+
+  unhighlightCode on "sourceCode" line 12 row 0  
+  highlightCode on "sourceCode" line 13 row 0  
+}
+{
+  color "653602616" type "fillColor" (255, 0, 255)  
+  text "S2_t653602616" "S2" offset (-30, 50) from "653602616" NE color (0, 0, 0) depth 1 font SansSerif size 15 bold
+  setGridValue "grid1[3][0]" "o" refresh 
+setGridValue "grid1[3][1]" "2" refresh 
+setGridValue "grid1[3][2]" "100" refresh 
+
+  setGridValue "grid1[4][0]" "f" refresh 
+setGridValue "grid1[4][1]" "1" refresh 
+setGridValue "grid1[4][2]" "101" refresh 
+
+  unhighlightCode on "sourceCode" line 13 row 0  
+  highlightCode on "sourceCode" line 14 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  unhighlightCode on "sourceCode" line 17 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+label "Iteration 7"
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+}
+{
+  text "OText" "O" offset (12, -30) from "Circle13" SW color (0, 0, 0) depth 1 font SansSerif size 12
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 17 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  highlightCode on "sourceCode" line 15 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 15 row 0  
+  unhighlightCode on "sourceCode" line 17 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+label "Iteration 8"
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+}
+{
+  text "FText" "F" offset (12, -30) from "Circle14" SW color (0, 0, 0) depth 1 font SansSerif size 12
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 17 row 0  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 17 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  highlightCode on "sourceCode" line 15 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 15 row 0  
+  unhighlightCode on "sourceCode" line 17 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+label "Iteration 9"
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+}
+{
+  text "rootName22" "f=2" offset (12, -30) from "Circle12" SW color (0, 0, 0) depth 1 font SansSerif size 12
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 11 row 0  
+  color "1389880061" type "fillColor" (192, 192, 192)  
+  color "1534556808" type "fillColor" (192, 192, 192)  
+  color "17671586" type "fillColor" (192, 192, 192)  
+  color "653602616" type "fillColor" (192, 192, 192)  
+  color "720312707" type "fillColor" (192, 192, 192)  
+  color "930348410" type "fillColor" (192, 192, 192)  
+  rectangle "Rect14" offset (-2, -5) from "720312707" NW offset (2, 5) from "930348410" SE color (0, 0, 0) depth 1
+  setGridValue "grid1[5][0]" "h" refresh 
+setGridValue "grid1[5][1]" "1" refresh 
+setGridValue "grid1[5][2]" "11" refresh 
+
+  setGridValue "grid1[6][0]" "s" refresh 
+setGridValue "grid1[6][1]" "1" refresh 
+setGridValue "grid1[6][2]" "11" refresh 
+
+  hide "Text21" "S2_t653602616" "Rect13" 
+}
+{
+  unhighlightCode on "sourceCode" line 11 row 0  
+  highlightCode on "sourceCode" line 12 row 0  
+  circle "Circle15" offset (-16, 50) from "Circle12" SW radius 20 color (0, 0, 0) depth 1
+  polyline "Polyline15" offset (6, -6) from "Circle12" SW offset (-6, 6) from "Circle15" NE color (0, 0, 0) depth 1
+  text "Text22" "0" offset (-14, -15) from "Circle15" NE color (0, 0, 0) depth 1 font SansSerif size 12
+  circle "Circle16" offset (16, 50) from "Circle12" SE radius 20 color (0, 0, 0) depth 1
+  polyline "Polyline16" offset (-6, -6) from "Circle12" SE offset (6, 6) from "Circle16" NW color (0, 0, 0) depth 1
+  text "Text23" "1" offset (8, -15) from "Circle16" NW color (0, 0, 0) depth 1 font SansSerif size 12
+}
+{
+  color "720312707" type "fillColor" (0, 255, 255)  
+  text "S1_t720312707" "S1" offset (-30, 53) from "720312707" NE color (0, 0, 0) depth 1 font SansSerif size 15 bold
+  setGridValue "grid1[5][0]" "h" refresh 
+setGridValue "grid1[5][1]" "1" refresh 
+setGridValue "grid1[5][2]" "110" refresh 
+
+  setGridValue "grid1[6][0]" "s" refresh 
+setGridValue "grid1[6][1]" "1" refresh 
+setGridValue "grid1[6][2]" "11" refresh 
+
+  unhighlightCode on "sourceCode" line 12 row 0  
+  highlightCode on "sourceCode" line 13 row 0  
+}
+{
+  color "930348410" type "fillColor" (255, 0, 255)  
+  text "S2_t930348410" "S2" offset (-30, 50) from "930348410" NE color (0, 0, 0) depth 1 font SansSerif size 15 bold
+  setGridValue "grid1[5][0]" "h" refresh 
+setGridValue "grid1[5][1]" "1" refresh 
+setGridValue "grid1[5][2]" "110" refresh 
+
+  setGridValue "grid1[6][0]" "s" refresh 
+setGridValue "grid1[6][1]" "1" refresh 
+setGridValue "grid1[6][2]" "111" refresh 
+
+  unhighlightCode on "sourceCode" line 13 row 0  
+  highlightCode on "sourceCode" line 14 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  unhighlightCode on "sourceCode" line 17 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+label "Iteration 10"
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+}
+{
+  text "HText" "H" offset (12, -30) from "Circle15" SW color (0, 0, 0) depth 1 font SansSerif size 12
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 17 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 14 row 0  
+  highlightCode on "sourceCode" line 15 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 15 row 0  
+  unhighlightCode on "sourceCode" line 17 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+label "Iteration 11"
+{
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+}
+{
+  text "SText" "S" offset (12, -30) from "Circle16" SW color (0, 0, 0) depth 1 font SansSerif size 12
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 17 row 0  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 17 row 0  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 17 row 0  
+  unhighlightCode on "sourceCode" line 8 row 0  
+  highlightCode on "sourceCode" line 17 row 0  
+  text "output" "Output: N(00) A(01) O(100) F(101) H(110) S(111) " (300, 35) color (0, 0, 0) depth 1 font SansSerif size 16 bold
+  text "results" "Avarage amount of bits for encoding one symbol is:" offset (0, 30) from "output" NW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "results2" "Total_Amount_of_bits/Total_amount_of_symbols = 31/13 = 2.3846154" offset (0, 30) from "results" NW color (0, 0, 0) depth 1 font SansSerif size 16
+  hide "Rect14" "S1_t720312707" "S2_t930348410" "lists" "1389880061" "N_list" "N_freq" "1534556808" "A_list" "A_freq" "17671586" "O_list" "O_freq" "653602616" "F_list" "F_freq" "720312707" "H_list" "H_freq" "930348410" "S_list" "S_freq" 
+}
+label "Results"
+{
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  text "result1" "Coded Text:" (300, 35) color (0, 0, 0) depth 1 font SansSerif size 16
+  text "results1" "111 110 01 00 00 100 00 101 01 00 00 100 00 " offset (0, 30) from "output" NW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "results2_1" "Total amount of bits with Shannon coding: 31 bits" offset (0, 30) from "results1" NW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "results3_1" "Total amount of bits without Shannon coding: 13 chars * 3 bit= 39 bits" offset (0, 30) from "results2_1" NW color (0, 0, 0) depth 1 font SansSerif size 16
+  text "results4_1" "39-31 = 8, we save 8 bits" offset (0, 30) from "results3_1" NW color (0, 0, 0) depth 1 font SansSerif size 16
+  hide "output" "results" "results2" 
+}

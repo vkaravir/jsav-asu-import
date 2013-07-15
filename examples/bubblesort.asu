@@ -1,0 +1,454 @@
+%Animal 2 800*600
+title "Bubble Sort 2.0[EN]"
+author "Tanya Harizanova,Dimitar Dimitrov"
+{
+  interactionDefinition "intDef20130513112646502.txt"
+  text "title" "BubbleSort" (150, 30) color (0, 0, 0) depth 1 font SansSerif size 12
+  rectangle "frame1" offset (-5, -5) from "title" NW offset (5, 5) from "title" SE color (0, 0, 0) depth 2 filled  fillColor (255, 175, 175)
+  codegroup "description" at (10, 110) color (0, 0, 0) highlightColor (0, 0, 0) contextColor (0, 0, 0) font SansSerif size 12 depth 1
+  addCodeLine "Information about this algorithm:" to "description"
+  addCodeLine "Bubble sort, sometimes incorrectly referred to as sinking sort, is a simple sorting algorithm  " to "description"
+  addCodeLine "that works by repeatedly stepping through the list to be sorted," to "description"
+  addCodeLine "comparing each pair of adjacent items and swapping them  " to "description"
+  addCodeLine "if they are in the wrong order. The pass through the list is repeated" to "description"
+  addCodeLine "until no swaps are needed, which indicates that the list is sorted." to "description"
+  addCodeLine "The algorithm gets its name from the way smaller elements bubble to the top of the list." to "description"
+  addCodeLine "Because it only uses comparisons to operate on elements, " to "description"
+  addCodeLine "it is a comparison sort. Although the algorithm is simple, " to "description"
+  addCodeLine "some other algorithms are more efficient for sorting large lists." to "description"
+  rectangle "Rect3" offset (-5, -5) from "description" NW offset (5, 5) from "description" SE color (0, 0, 0) depth 2 filled  fillColor (192, 192, 192)
+}
+label "Introduction"
+{
+  hideAll
+  text "Text2" "BubbleSort" (150, 30) color (0, 0, 0) depth 1 font SansSerif size 12
+  rectangle "Rect4" offset (-5, -5) from "Text2" NW offset (5, 5) from "Text2" SE color (0, 0, 0) depth 2 filled  fillColor (255, 175, 175)
+  codegroup "sourceCode" at (10, 200) color (0, 0, 255) highlightColor (255, 0, 0) contextColor (0, 0, 0) font SansSerif size 12 depth 1
+  addCodeLine "If isSorted = true" to "sourceCode"
+  addCodeLine " terminate the algorithm" to "sourceCode" indentation 3
+  addCodeLine " otherwise set isSorted = true " to "sourceCode" indentation 3
+  addCodeLine "Compare the element at position i with element at position j," to "sourceCode"
+  addCodeLine "element at position i is greater then element at position j," to "sourceCode"
+  addCodeLine " then switch elements,and set isSorted=false" to "sourceCode" indentation 3
+  addCodeLine " otherwise do nothing." to "sourceCode" indentation 3
+  addCodeLine "if i position is last position of the list" to "sourceCode"
+  addCodeLine " then start from the beginn of the list ,the same all over again" to "sourceCode" indentation 3
+  addCodeLine " otherwise go to position i + 1 and j + 1 and compare it again.." to "sourceCode" indentation 3
+  array "array" (30, 160)  color (0, 0, 0) fillColor (192, 192, 192) elementColor (0, 0, 0) elemHighlight (0, 0, 0) cellHighlight (0, 0, 0) horizontal length 4 "16" "24" "13" "4"  depth 1 font SansSerif size 12
+}
+{
+  arrayMarker "i" on "array" atIndex 0 label "i" color (0, 0, 255) depth 1
+  arrayMarker "j" on "array" atIndex 1 label "j" color (0, 0, 255) depth 1
+  declare isSorted initvalue "false  in step (2)"
+}
+{
+}
+label "1. Interaction "
+{
+  highlightCode on "sourceCode" line 0 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 0 row 0  
+  highlightCode on "sourceCode" line 2 row 0  
+  update isSorted to "true  in step (5)"
+}
+{
+  unhighlightCode on "sourceCode" line 2 row 0  
+  highlightCode on "sourceCode" line 3 row 0  
+}
+{
+  declare repeats initvalue "1  in step (7)"
+  moveArrayMarker "i" to position 0    within 40 ticks
+  moveArrayMarker "j" to position 1    within 40 ticks
+  unhighlightCode on "sourceCode" line 3 row 0  
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+}
+label "1.0 Comparisson"
+{
+  declare comparisson initvalue "0  in step (8)"
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  moveArrayMarker "i" to position 1    within 40 ticks
+  moveArrayMarker "j" to position 2    within 40 ticks
+  unhighlightCode on "sourceCode" line 3 row 0  
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+}
+label "1.1 Comparisson"
+{
+  update comparisson to "1  in step (12)"
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  arraySwap on "array" position 1 with 2   within 100 ticks
+}
+label "1.1.0 Swap"
+{
+  update isSorted to "false  in step (13)"
+  declare Swaps initvalue "0  in step (13)"
+  unhighlightCode on "sourceCode" line 5 row 0  
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  moveArrayMarker "i" to position 2    within 40 ticks
+  moveArrayMarker "j" to position 3    within 40 ticks
+  unhighlightCode on "sourceCode" line 3 row 0  
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+}
+label "1.2 Comparisson"
+{
+  update comparisson to "2  in step (16)"
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  arraySwap on "array" position 2 with 3   within 100 ticks
+}
+label "1.2.1 Swap"
+{
+  update isSorted to "false  in step (17)"
+  update Swaps to "1  in step (17)"
+  unhighlightCode on "sourceCode" line 5 row 0  
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  moveArrayMarker "i" to position 3    within 40 ticks
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 8 row 0  
+}
+label "2. Interaction "
+{
+  highlightCode on "sourceCode" line 0 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 0 row 0  
+  highlightCode on "sourceCode" line 2 row 0  
+  update isSorted to "true  in step (22)"
+}
+{
+  unhighlightCode on "sourceCode" line 2 row 0  
+  highlightCode on "sourceCode" line 3 row 0  
+}
+{
+  update repeats to "2  in step (24)"
+  moveArrayMarker "i" to position 0    within 40 ticks
+  moveArrayMarker "j" to position 1    within 40 ticks
+  unhighlightCode on "sourceCode" line 3 row 0  
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+}
+label "2.0 Comparisson"
+{
+  update comparisson to "3  in step (25)"
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  arraySwap on "array" position 0 with 1   within 100 ticks
+}
+label "2.0.2 Swap"
+{
+  update isSorted to "false  in step (26)"
+  update Swaps to "2  in step (26)"
+  unhighlightCode on "sourceCode" line 5 row 0  
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  moveArrayMarker "i" to position 1    within 40 ticks
+  moveArrayMarker "j" to position 2    within 40 ticks
+  unhighlightCode on "sourceCode" line 3 row 0  
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+}
+label "2.1 Comparisson"
+{
+  update comparisson to "4  in step (29)"
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  arraySwap on "array" position 1 with 2   within 100 ticks
+}
+label "2.1.3 Swap"
+{
+  update isSorted to "false  in step (30)"
+  update Swaps to "3  in step (30)"
+  unhighlightCode on "sourceCode" line 5 row 0  
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  moveArrayMarker "i" to position 2    within 40 ticks
+  moveArrayMarker "j" to position 3    within 40 ticks
+  unhighlightCode on "sourceCode" line 3 row 0  
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+}
+label "2.2 Comparisson"
+{
+  update comparisson to "5  in step (33)"
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  moveArrayMarker "i" to position 3    within 40 ticks
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 8 row 0  
+}
+label "3. Interaction "
+{
+  highlightCode on "sourceCode" line 0 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 0 row 0  
+  highlightCode on "sourceCode" line 2 row 0  
+  update isSorted to "true  in step (39)"
+}
+{
+  unhighlightCode on "sourceCode" line 2 row 0  
+  highlightCode on "sourceCode" line 3 row 0  
+}
+{
+  update repeats to "3  in step (41)"
+  moveArrayMarker "i" to position 0    within 40 ticks
+  moveArrayMarker "j" to position 1    within 40 ticks
+  unhighlightCode on "sourceCode" line 3 row 0  
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+}
+label "3.0 Comparisson"
+{
+  update comparisson to "6  in step (42)"
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 5 row 0  
+  arraySwap on "array" position 0 with 1   within 100 ticks
+}
+label "3.0.4 Swap"
+{
+  update isSorted to "false  in step (43)"
+  update Swaps to "4  in step (43)"
+  unhighlightCode on "sourceCode" line 5 row 0  
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  moveArrayMarker "i" to position 1    within 40 ticks
+  moveArrayMarker "j" to position 2    within 40 ticks
+  unhighlightCode on "sourceCode" line 3 row 0  
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+}
+label "3.1 Comparisson"
+{
+  update comparisson to "7  in step (46)"
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  moveArrayMarker "i" to position 2    within 40 ticks
+  moveArrayMarker "j" to position 3    within 40 ticks
+  unhighlightCode on "sourceCode" line 3 row 0  
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+}
+label "3.2 Comparisson"
+{
+  update comparisson to "8  in step (50)"
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  moveArrayMarker "i" to position 3    within 40 ticks
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 8 row 0  
+}
+label "4. Interaction "
+{
+  highlightCode on "sourceCode" line 0 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 0 row 0  
+  highlightCode on "sourceCode" line 2 row 0  
+  update isSorted to "true  in step (56)"
+}
+{
+  unhighlightCode on "sourceCode" line 2 row 0  
+  highlightCode on "sourceCode" line 3 row 0  
+}
+{
+  update repeats to "4  in step (58)"
+  moveArrayMarker "i" to position 0    within 40 ticks
+  moveArrayMarker "j" to position 1    within 40 ticks
+  unhighlightCode on "sourceCode" line 3 row 0  
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+}
+label "4.0 Comparisson"
+{
+  update comparisson to "9  in step (59)"
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  moveArrayMarker "i" to position 1    within 40 ticks
+  moveArrayMarker "j" to position 2    within 40 ticks
+  unhighlightCode on "sourceCode" line 3 row 0  
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+}
+label "4.1 Comparisson"
+{
+  update comparisson to "10  in step (63)"
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  moveArrayMarker "i" to position 2    within 40 ticks
+  moveArrayMarker "j" to position 3    within 40 ticks
+  unhighlightCode on "sourceCode" line 3 row 0  
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 4 row 0  
+}
+label "4.2 Comparisson"
+{
+  update comparisson to "11  in step (67)"
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 6 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 5 row 0  
+  unhighlightCode on "sourceCode" line 6 row 0  
+  highlightCode on "sourceCode" line 7 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 7 row 0  
+  highlightCode on "sourceCode" line 9 row 0  
+}
+{
+  moveArrayMarker "i" to position 3    within 40 ticks
+  unhighlightCode on "sourceCode" line 9 row 0  
+  highlightCode on "sourceCode" line 8 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 8 row 0  
+}
+label "5. Interaction "
+{
+  unhighlightCode on "sourceCode" line 4 row 0  
+  highlightCode on "sourceCode" line 0 row 0  
+}
+{
+  unhighlightCode on "sourceCode" line 0 row 0  
+  highlightCode on "sourceCode" line 1 row 0  
+  text "repeats" "Repeats : 4" (15, 460) color (0, 0, 0) depth 1 font SansSerif size 12
+  text "comparisons" "Comparisons : 12" (145, 464) color (0, 0, 0) depth 1 font SansSerif size 12
+  text "swaps" "Swaps : 5" (315, 464) color (0, 0, 0) depth 1 font SansSerif size 12
+  rectangle "Rect5" offset (-5, -5) from "repeats" NW offset (5, 5) from "repeats" SE color (0, 0, 0) depth 2 filled  fillColor (255, 255, 0)
+  rectangle "frame2" offset (-5, -5) from "comparisons" NW offset (5, 5) from "comparisons" SE color (0, 0, 0) depth 2 filled  fillColor (255, 255, 0)
+  rectangle "frame3" offset (-5, -5) from "swaps" NW offset (5, 5) from "swaps" SE color (0, 0, 0) depth 2 filled  fillColor (255, 255, 0)
+}
+label "Show Result"
+{
+  hideAll
+  text "Text3" "BubbleSort" (150, 30) color (0, 0, 0) depth 1 font SansSerif size 12
+  rectangle "Rect6" offset (-5, -5) from "Text3" NW offset (5, 5) from "Text3" SE color (0, 0, 0) depth 2 filled  fillColor (255, 175, 175)
+  codegroup "SourceCode2" at (10, 50) color (0, 0, 0) highlightColor (0, 0, 0) contextColor (0, 0, 0) font SansSerif size 12 depth 1
+  addCodeLine "" to "SourceCode2"
+  addCodeLine "" to "SourceCode2"
+  addCodeLine "Run time :" to "SourceCode2"
+  addCodeLine "" to "SourceCode2"
+  addCodeLine "Bubble sort has worst-case and average complexity both O(n^2), " to "SourceCode2"
+  addCodeLine "where n is the number of items being sorted." to "SourceCode2"
+  addCodeLine "Therefore,it is recomended to use another faster algorithm to " to "SourceCode2"
+  addCodeLine "sort a list efficiently." to "SourceCode2"
+  addCodeLine "" to "SourceCode2"
+  addCodeLine "" to "SourceCode2"
+  addCodeLine "" to "SourceCode2"
+  addCodeLine "Sources:" to "SourceCode2"
+  addCodeLine "" to "SourceCode2"
+  addCodeLine "http://de.wikipedia.org/wiki/Bubblesort" to "SourceCode2"
+}
+label "Conclusion"
