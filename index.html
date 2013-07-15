@@ -32,12 +32,51 @@
 
         <section id="main_content">
           <h3>
-<a name="jsav-animalscript-import-plugin" class="anchor" href="#jsav-animalscript-import-plugin"><span class="octicon octicon-link"></span></a>JSAV AnimalScript Import "Plugin"</h3>
+<a name="jsav-animalscript-import-plugin" class="anchor" href="#jsav-animalscript-import-plugin"><span class="octicon octicon-link"></span></a>Getting Started</h3>
 
-<p>You might have noticed, that this page is still under development :)</p>
+          <p>Getting started is relatively simple. First, create an AnimalScript file using
+            <a href="http://algoanim.info/AnimalAV/">Animal</a>. Once you have a <code>.asu</code> file,
+            create a new HTML file with the following structure.</p>
+          <pre>&lt;!doctype html>
+&lt;html>
+  &lt;head>
+    &lt;title>ASU Import&lt;/title>
+    &lt;link rel="stylesheet" href="lib/JSAV.css" />
+  &lt;/head>
+  &lt;body>
+    &lt;div id="asucontainer"> &lt;-- Here the animation will be added -->
+      &lt;div class="jsavcounter">&lt;/div>
+      &lt;div class="jsavcontrols">&lt;/div>
+    &lt;/div>
+    &lt;script src="lib/jquery.min.js">&lt;/script>
+    &lt;script src="lib/jquery-ui.min.js">&lt;/script>
+    &lt;script src="lib/jquery.transform.light.js">&lt;/script>
+    &lt;script src="lib/raphael.js">&lt;/script>
+    &lt;script src="lib/JSAV-min.js">&lt;/script>
+    &lt;script src="jsav-asu-import.js">&lt;/script>
+    &lt;script>
+      var av = new JSAV("asucontainer");
+      av.importAsu("your-asu-file.asu");
+    &lt;/script>
+  &lt;/body>
+&lt;/html></pre>
+          <p>Just make sure you replace <code>your-asu-file.asu</code> with the location of
+            your <code>.asu</code> file. Also, ensure that the referenced JavaScript and CSS filepaths
+            are correct.</p>
 
-          <h3>Examples</h3>
-          <p>While I work on the documentation, you can take a look at these examples:</p>
+          <h3>Warning</h3>
+          <p>This thing is still very much beta, so it doesn't support all AnimalScript features.
+            AnimalScript turned out to be more complex than expected :) Furthermore, it most 
+            probably won't even parse all <code>.asu</code> files. If you encounter things that don't work,
+            please <a href="https://github.com/vkaravir/jsav-asu-import/issues">create an
+            issue</a>.
+          <p>Also, it's been a while since I took my compilers course, so if you look at the 
+            parser code and something seems stupid, it very likely is due to my limited parser
+            writing experience.</p>
+
+          <h3>Online Examples</h3>
+          <p>To get a quick look at what the result looks like, you can take a look at these
+            examples:</p>
           <ul>
             <li><a href="examples/hanoi.html">Towers of Hanoi</a></li>
             <li><a href="examples/insertionsort.html">Insertionsort</a></li>
